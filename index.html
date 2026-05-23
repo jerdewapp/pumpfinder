@@ -495,7 +495,7 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 
 <script src="spots_data.js"></script>
 <script>
-var SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
+var SPOTS = [];
 
 var BUILDERS = {
   bs:{label:"BikeSolutions",icon:"🟠",cls:"bs",desc:"Spécialiste français du pumptrack asphaltique",color:"#e65100"},
@@ -562,6 +562,7 @@ function makeMarker(s, isNearest) {
 }
 
 function initMap() {
+  SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
   map=L.map("map",{zoomControl:true}).setView([46.5,2.5],6);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'© <a href="https://www.openstreetmap.org">OSM</a>',maxZoom:18}).addTo(map);
   renderMarkers();
