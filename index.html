@@ -567,20 +567,19 @@ function makeMarker(s, isNearest) {
 function initMap() {
   map=L.map("map",{zoomControl:true}).setView([46.5,2.5],6);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'© <a href="https://www.openstreetmap.org">OSM</a>',maxZoom:18}).addTo(map);
+  clusterGroup=L.markerClusterGroup({maxClusterRadius:60,showCoverageOnHover:false,spiderfyOnMaxZoom:true,disableClusteringAtZoom:14});
+  map.addLayer(clusterGroup);
   renderMarkers();
 }
 
 function renderMarkers() {
-  markers.forEach(function(m){m.remove();}); markers=[];
+  clusterGroup.clearLayers();
+  markers=[];
   SPOTS.filter(filterMatch).forEach(function(s) {
     var isN=userPos&&s.id===nearestId;
-    var m=L.marker([s.lat,s.lng],{icon:makeMarker(s,isN),zIndexOffset:isN?1000:0}).addTo(map);
-    if(userPos){
-      var d=dist(userPos.lat,userPos.lng,s.lat,s.lng);
-      var ph='<div class="dist-pill'+(isN?" nearest":"")+'">'+fmtDist(d)+'</div>';
-      L.marker([s.lat,s.lng],{icon:L.divIcon({html:ph,className:'',iconSize:[60,18],iconAnchor:[30,-24]}),interactive:false}).addTo(map);
-    }
+    var m=L.marker([s.lat,s.lng],{icon:makeMarker(s,isN),zIndexOffset:isN?1000:0});
     m.on("click",function(){showDetail(s.id);});
+    clusterGroup.addLayer(m);
     markers.push(m);
   });
 }
