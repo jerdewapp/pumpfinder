@@ -921,6 +921,7 @@ function showScreen(id,btn){
 }
 
 window.addEventListener("load",function(){
+  SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
   initMap();
   currentUser={username:"Invité",role:"guest",contributions:0,avatar:"?"};
   document.getElementById("filter-bar").style.display="flex";
