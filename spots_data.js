@@ -2,7 +2,7 @@
 // Source : ourouler.com
 // Généré le : 2026-05-21 13:54
 
-var SPOTS = [
+var SPOTS_DATA = [
   {
     "id": 1,
     "name": "Pumptrack 2 Alpes Venosc",
