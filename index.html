@@ -596,17 +596,27 @@ function renderMarkers() {
 }
 
 function locateMe() {
+  if(!navigator.geolocation){showToast("❌ GPS non disponible sur cet appareil");return;}
   var fab=document.getElementById("gps-fab-btn");
   fab.classList.add("locating");
-  setTimeout(function(){
-    userPos={lat:45.48,lng:6.53};
-    fab.classList.remove("locating");
-    placeUserMarker(); computeNearest();
-    map.setView([userPos.lat,userPos.lng],11);
-    renderMarkers(); updateNearestBanner(); renderList();
-    document.getElementById("radius-bar").style.display="flex";
-    showToast("📍 Position simulée — Moûtiers");
-  },1200);
+  navigator.geolocation.getCurrentPosition(
+    function(position){
+      userPos={lat:position.coords.latitude,lng:position.coords.longitude};
+      fab.classList.remove("locating");
+      placeUserMarker(); computeNearest();
+      map.setView([userPos.lat,userPos.lng],13);
+      renderMarkers(); updateNearestBanner(); renderList();
+      document.getElementById("radius-bar").style.display="flex";
+      showToast("📍 Position trouvée !");
+    },
+    function(error){
+      fab.classList.remove("locating");
+      if(error.code===1) showToast("❌ Permission GPS refusée");
+      else if(error.code===2) showToast("❌ Position indisponible");
+      else showToast("❌ Délai GPS dépassé, réessayez");
+    },
+    {enableHighAccuracy:true, timeout:12000, maximumAge:60000}
+  );
 }
 
 function placeUserMarker() {
