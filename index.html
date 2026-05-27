@@ -265,8 +265,9 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 <div class="header-search" id="header-search">
   <div class="search-inner">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-    <input type="text" id="search-input" placeholder="Rechercher un pumptrack, ville…" oninput="onSearch(this.value)" autocomplete="off"/>
+    <input type="text" id="search-input" placeholder="Rechercher une ville…" onkeydown="if(event.key==='Enter')doGeoSearch(this.value)" autocomplete="off"/>
     <button class="search-clear" id="search-clear" onclick="clearSearch()" style="display:none">✕</button>
+    <button id="search-go" onclick="doGeoSearch(document.getElementById('search-input').value)" style="background:var(--primary);border:none;border-radius:8px;padding:4px 10px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);flex-shrink:0">OK</button>
   </div>
 </div>
 
@@ -544,7 +545,7 @@ var FILTER_PILL_CFG = {
 };
 
 var lang="fr", activeFilter="all", searchQuery="";
-var userPos=null, nearestId=null;
+var userPos=null, searchPos=null, nearestId=null;
 var map, markers=[], clusterGroup=null, userMarker=null, osmRadius=50;
 var favorites=new Set([1,4]);
 var currentUser=null;
@@ -665,14 +666,38 @@ function updateFilterPill() {
   pill.classList.add("show");
 }
 
+function doGeoSearch(q) {
+  q = q.trim();
+  if(!q) return;
+  document.getElementById("search-clear").style.display="block";
+  showToast("🔍 Recherche de "+q+"…");
+  fetch("https://nominatim.openstreetmap.org/search?q="+encodeURIComponent(q)+"&countrycodes=fr&format=json&limit=1",{headers:{"Accept-Language":"fr"}})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(!data||!data.length){showToast("❌ Ville introuvable");return;}
+      searchPos={lat:parseFloat(data[0].lat),lng:parseFloat(data[0].lon),label:data[0].display_name.split(",")[0]};
+      userPos=searchPos;
+      placeUserMarker();
+      computeNearest();
+      map.setView([userPos.lat,userPos.lng],11);
+      renderMarkers(); updateNearestBanner(); renderList();
+      document.getElementById("radius-bar").style.display="flex";
+      showToast("📍 "+searchPos.label+" · rayon "+osmRadius+" km");
+      showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
+    })
+    .catch(function(){showToast("❌ Erreur de recherche");});
+}
+
 function filterMatch(s) {
-  if(searchQuery){var h=(s.name+(s.city||"")+(s.desc||"")).toLowerCase();if(h.indexOf(searchQuery)===-1)return false;}
+  var pos=userPos||searchPos;
+  if(pos && osmRadius){
+    var d=dist(pos.lat,pos.lng,s.lat,s.lng);
+    if(d>osmRadius) return false;
+  }
   if(activeFilter==="all") return true;
   if(activeFilter==="kids") return s.kids===true;
   if(activeFilter==="playground") return s.equip && s.equip.playground===true;
   if(activeFilter==="skatepark") return s.equip && s.equip.skatepark===true;
-  if(activeFilter==="bs") return s.builder==="bs";
-  if(activeFilter==="vs") return s.builder==="vs";
   if(activeFilter==="lit") return s.lit;
   if(activeFilter==="free") return s.free;
   if(activeFilter==="dirt") return s.surface==="dirt";
@@ -916,8 +941,8 @@ function dist(la1,lo1,la2,lo2){var R=6371,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1
 function fmtDist(d){return d<1?(d*1000).toFixed(0)+"m":d.toFixed(1)+"km";}
 function showToast(msg){var el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove("show");},2800);}
 function toggleSearch(){searchOpen=!searchOpen;document.getElementById("header-search").classList.toggle("open",searchOpen);if(searchOpen)setTimeout(function(){document.getElementById("search-input").focus();},320);else clearSearch();}
-function onSearch(v){searchQuery=v.trim().toLowerCase();document.getElementById("search-clear").style.display=v?"block":"none";computeNearest();renderMarkers();renderList();}
-function clearSearch(){searchQuery="";document.getElementById("search-input").value="";document.getElementById("search-clear").style.display="none";computeNearest();renderMarkers();renderList();}
+function onSearch(v){}
+function clearSearch(){searchPos=null;searchQuery="";var el=document.getElementById("search-input");if(el)el.value="";document.getElementById("search-clear").style.display="none";if(!userPos||userPos===searchPos)userPos=null;computeNearest();renderMarkers();renderList();updateNearestBanner();}
 function toggleLang(){lang=lang==="fr"?"en":"fr";document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";renderList();if(currentUser)renderProfile();showToast(lang==="fr"?"🇫🇷 Français":"🇬🇧 English");}
 
 function showScreen(id,btn){
