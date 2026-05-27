@@ -942,7 +942,19 @@ function fmtDist(d){return d<1?(d*1000).toFixed(0)+"m":d.toFixed(1)+"km";}
 function showToast(msg){var el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove("show");},2800);}
 function toggleSearch(){searchOpen=!searchOpen;document.getElementById("header-search").classList.toggle("open",searchOpen);if(searchOpen)setTimeout(function(){document.getElementById("search-input").focus();},320);else clearSearch();}
 function onSearch(v){}
-function clearSearch(){searchPos=null;searchQuery="";var el=document.getElementById("search-input");if(el)el.value="";document.getElementById("search-clear").style.display="none";if(!userPos||userPos===searchPos)userPos=null;computeNearest();renderMarkers();renderList();updateNearestBanner();}
+function clearSearch(){
+  searchPos=null;
+  searchQuery="";
+  userPos=null;
+  if(userMarker){userMarker.remove();userMarker=null;}
+  var el=document.getElementById("search-input");if(el)el.value="";
+  document.getElementById("search-clear").style.display="none";
+  document.getElementById("nearest-banner").classList.remove("show");
+  document.getElementById("radius-bar").style.display="none";
+  nearestId=null;
+  map.setView([46.5,2.5],6);
+  renderMarkers();renderList();
+}
 function toggleLang(){lang=lang==="fr"?"en":"fr";document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";renderList();if(currentUser)renderProfile();showToast(lang==="fr"?"🇫🇷 Français":"🇬🇧 English");}
 
 function showScreen(id,btn){
