@@ -524,6 +524,213 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 <script>
 var SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
 
+var LANG = {
+  fr: {
+    nav_map:"Carte", nav_list:"Liste", nav_add:"Ajouter", nav_profile:"Profil",
+    filter_all:"Tous", filter_kids:"Kid Zone", filter_playground:"Aire de jeux", filter_skatepark:"Skatepark",
+    filter_dirt:"Terre", filter_lit:"Éclairé", filter_free:"Accès libre",
+    search_placeholder:"Rechercher une ville…",
+    nearest_tag:"⚡ Pumptrack le plus proche",
+    install_msg:"Installer PumpFinder sur votre écran d'accueil",
+    install_btn:"Installer",
+    detail_chars:"📋 Caractéristiques", detail_equip:"⚙️ Équipements à proximité",
+    detail_desc:"💬 Description", detail_status:"📊 État", detail_report:"🚩 Signaler",
+    detail_osm_lbl:"📡 OSM + communauté", detail_no_equip:"Aucun renseigné",
+    detail_from_pos:"de votre position", detail_nearest:"⚡ Le plus proche",
+    detail_ourouler:"Voir la fiche ourouler.com",
+    detail_route:"🗺️ Itinéraire", detail_close:"✕",
+    report_ok:"✅ Tout ok", report_warn:"⚠️ Problème", report_hs:"🔴 Fermé",
+    chip_lit:"💡 Éclairé", chip_free:"🆓 Accès libre", chip_kids:"👶 Kids OK", chip_playground:"🛝 Aire de jeux",
+    sorted_dist:"📍 Triés par distance",
+    add_title_loc:"📍 Localisation", add_gps_btn:"Utiliser ma position GPS",
+    add_name:"Nom du spot", add_name_ph:"Ex: Pumptrack de Valmorel",
+    add_city:"Ville / Commune", add_city_ph:"Ex: Valmorel, Savoie",
+    add_lat:"Latitude", add_lng:"Longitude",
+    add_title_diff:"🎯 Difficulté", add_title_surf:"🛣️ Surface", add_title_builder:"🏗️ Constructeur",
+    add_title_equip:"⚙️ Équipements", add_title_desc:"💬 Description",
+    add_desc_ph:"Ambiance, accès, particularités…",
+    add_optional:"optionnel", add_community:"Visible immédiatement · Validé par la communauté (3 ✅)",
+    add_next:"Suivant →", add_back:"← Retour", add_submit:"✅ Soumettre",
+    add_step1:"Où ?", add_step2:"Quoi ?", add_step3:"Détails",
+    diff_beg:"Débutant", diff_inter:"Inter.", diff_exp:"Expert",
+    surf_asphalt:"Asphalte", surf_dirt:"Terre", surf_concrete:"Béton",
+    builder_bs:"BikeSolutions", builder_vs:"Velosolutions", builder_commune:"Commune",
+    builder_asso:"Associatif", builder_inconnu:"Inconnu", builder_other:"Autre",
+    equip_light:"💡 Éclairage", equip_free:"🆓 Accès libre", equip_toilets:"🚻 Toilettes",
+    equip_fountain:"⛲ Fontaine", equip_picnic:"🍽️ Picnic", equip_skate:"🛹 Skatepark",
+    equip_playground:"🛝 Aire de jeux", equip_parking:"🅿️ Parking", equip_kids:"👶 Kids zone",
+    profile_spots:"Spots ajoutés", profile_favs:"Favoris", profile_total:"Spots France",
+    profile_myfavs:"Mes favoris", profile_myspots:"Mes spots ajoutés",
+    profile_lang:"Langue : Français", profile_settings:"Paramètres", profile_logout:"Se déconnecter",
+    auth_login:"Connexion", auth_register:"Inscription",
+    auth_user:"Pseudo ou email", auth_pass:"Mot de passe", auth_forgot:"Mot de passe oublié ?",
+    auth_signin:"Se connecter", auth_guest:"Continuer sans compte",
+    auth_pseudo:"Pseudo", auth_email:"Email", auth_confirm:"Confirmer",
+    auth_cgu:"J'accepte les conditions d'utilisation", auth_create:"Créer mon compte",
+    auth_tagline:"Trouve tous les pumptracks de France",
+    radius_label:"📡 Rayon",
+    builder_desc_bs:"Spécialiste français du pumptrack asphaltique",
+    builder_desc_vs:"Leader mondial du pumptrack asphaltique",
+    builder_desc_commune:"Réalisation municipale",
+    builder_desc_asso:"Construit par une association locale",
+    builder_desc_inconnu:"Constructeur non renseigné",
+    no_spot:"Aucun spot trouvé",
+    or:"ou",
+  },
+  en: {
+    nav_map:"Map", nav_list:"List", nav_add:"Add", nav_profile:"Profile",
+    filter_all:"All", filter_kids:"Kid Zone", filter_playground:"Playground", filter_skatepark:"Skatepark",
+    filter_dirt:"Dirt", filter_lit:"Lit", filter_free:"Free access",
+    search_placeholder:"Search a city…",
+    nearest_tag:"⚡ Nearest pumptrack",
+    install_msg:"Install PumpFinder on your home screen",
+    install_btn:"Install",
+    detail_chars:"📋 Features", detail_equip:"⚙️ Nearby amenities",
+    detail_desc:"💬 Description", detail_status:"📊 Status", detail_report:"🚩 Report",
+    detail_osm_lbl:"📡 OSM + community", detail_no_equip:"None listed",
+    detail_from_pos:"from your location", detail_nearest:"⚡ Nearest",
+    detail_ourouler:"View on ourouler.com",
+    detail_route:"🗺️ Directions", detail_close:"✕",
+    report_ok:"✅ All good", report_warn:"⚠️ Issue", report_hs:"🔴 Closed",
+    chip_lit:"💡 Lit", chip_free:"🆓 Free access", chip_kids:"👶 Kids OK", chip_playground:"🛝 Playground",
+    sorted_dist:"📍 Sorted by distance",
+    add_title_loc:"📍 Location", add_gps_btn:"Use my GPS position",
+    add_name:"Spot name", add_name_ph:"E.g. Valmorel Pumptrack",
+    add_city:"City / Town", add_city_ph:"E.g. Valmorel, Savoie",
+    add_lat:"Latitude", add_lng:"Longitude",
+    add_title_diff:"🎯 Difficulty", add_title_surf:"🛣️ Surface", add_title_builder:"🏗️ Builder",
+    add_title_equip:"⚙️ Amenities", add_title_desc:"💬 Description",
+    add_desc_ph:"Atmosphere, access, features…",
+    add_optional:"optional", add_community:"Visible immediately · Community validated (3 ✅)",
+    add_next:"Next →", add_back:"← Back", add_submit:"✅ Submit",
+    add_step1:"Where?", add_step2:"What?", add_step3:"Details",
+    diff_beg:"Beginner", diff_inter:"Inter.", diff_exp:"Expert",
+    surf_asphalt:"Asphalt", surf_dirt:"Dirt", surf_concrete:"Concrete",
+    builder_bs:"BikeSolutions", builder_vs:"Velosolutions", builder_commune:"Municipality",
+    builder_asso:"Association", builder_inconnu:"Unknown", builder_other:"Other",
+    equip_light:"💡 Lighting", equip_free:"🆓 Free access", equip_toilets:"🚻 Toilets",
+    equip_fountain:"⛲ Fountain", equip_picnic:"🍽️ Picnic", equip_skate:"🛹 Skatepark",
+    equip_playground:"🛝 Playground", equip_parking:"🅿️ Parking", equip_kids:"👶 Kids zone",
+    profile_spots:"Spots added", profile_favs:"Favourites", profile_total:"Spots in France",
+    profile_myfavs:"My favourites", profile_myspots:"My added spots",
+    profile_lang:"Language: English", profile_settings:"Settings", profile_logout:"Log out",
+    auth_login:"Login", auth_register:"Sign up",
+    auth_user:"Username or email", auth_pass:"Password", auth_forgot:"Forgot password?",
+    auth_signin:"Sign in", auth_guest:"Continue without account",
+    auth_pseudo:"Username", auth_email:"Email", auth_confirm:"Confirm",
+    auth_cgu:"I accept the terms of use", auth_create:"Create account",
+    auth_tagline:"Find all pumptracks in France",
+    radius_label:"📡 Radius",
+    builder_desc_bs:"French asphalt pumptrack specialist",
+    builder_desc_vs:"World leader in asphalt pumptracks",
+    builder_desc_commune:"Municipal build",
+    builder_desc_asso:"Built by a local association",
+    builder_desc_inconnu:"Builder unknown",
+    no_spot:"No spots found",
+    or:"or",
+  }
+};
+
+function t(k){ return (LANG[lang]&&LANG[lang][k]) ? LANG[lang][k] : (LANG.fr[k]||k); }
+
+function applyLang() {
+  // Nav
+  document.querySelectorAll(".nav-lbl")[0].textContent=t("nav_map");
+  document.querySelectorAll(".nav-lbl")[1].textContent=t("nav_list");
+  document.querySelectorAll(".nav-lbl")[2].textContent=t("nav_add");
+  document.querySelectorAll(".nav-lbl")[3].textContent=t("nav_profile");
+  // Filtres barre principale — ne touche qu'au .chip-lbl, préserve les SVG
+  document.querySelector(".chip[data-f='all'] .chip-lbl").textContent=t("filter_all");
+  document.querySelector(".chip[data-f='kids'] .chip-lbl").textContent=t("filter_kids");
+  document.querySelector(".chip[data-f='playground'] .chip-lbl").textContent=t("filter_playground");
+  document.querySelector(".chip[data-f='skatepark'] .chip-lbl").textContent=t("filter_skatepark");
+  // Filtres tiroir — ne touche qu'au nœud texte final, préserve les SVG
+  function setPillText(sel, txt) {
+    var el=document.querySelector(sel);
+    if(!el) return;
+    var nodes=Array.from(el.childNodes).filter(function(n){return n.nodeType===3;});
+    if(nodes.length) nodes[nodes.length-1].textContent=" "+txt;
+  }
+  setPillText(".chip-pill[data-f='dirt']", t("filter_dirt"));
+  setPillText(".chip-pill[data-f='lit']",  t("filter_lit"));
+  setPillText(".chip-pill[data-f='free']", t("filter_free"));
+  // Search
+  document.getElementById("search-input").placeholder=t("search_placeholder");
+  // Nearest banner
+  document.querySelector(".nb-tag").textContent=t("nearest_tag");
+  // Radius
+  document.querySelector(".radius-bar label").textContent=t("radius_label");
+  // Install banner
+  var ib=document.querySelector("#install-banner div");
+  if(ib) ib.textContent=t("install_msg");
+  var ibtn=document.querySelector("#install-banner button");
+  if(ibtn) ibtn.textContent=t("install_btn");
+  // Stepper labels
+  document.querySelectorAll(".step-lbl")[0].textContent=t("add_step1");
+  document.querySelectorAll(".step-lbl")[1].textContent=t("add_step2");
+  document.querySelectorAll(".step-lbl")[2].textContent=t("add_step3");
+  // Stepper content
+  var sc1=document.getElementById("step-content-1");
+  if(sc1){
+    sc1.querySelector(".step-card-title").textContent=t("add_title_loc");
+    sc1.querySelector(".gps-big").innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/><circle cx="12" cy="12" r="7"/></svg> '+t("add_gps_btn");
+    var labels=sc1.querySelectorAll(".field label");
+    labels[0].textContent=t("add_name"); sc1.querySelector("#add-name").placeholder=t("add_name_ph");
+    labels[1].textContent=t("add_city"); sc1.querySelector("#add-city").placeholder=t("add_city_ph");
+    labels[2].textContent=t("add_lat");
+    labels[3].textContent=t("add_lng");
+  }
+  var sc2=document.getElementById("step-content-2");
+  if(sc2){
+    sc2.querySelectorAll(".step-card-title")[0].textContent=t("add_title_diff");
+    sc2.querySelectorAll(".step-card-title")[1].textContent=t("add_title_surf");
+    sc2.querySelectorAll(".step-card-title")[2].textContent=t("add_title_builder");
+    var dts=sc2.querySelectorAll(".diff-tile");
+    dts[0].lastChild.textContent=t("diff_beg"); dts[1].lastChild.textContent=t("diff_inter"); dts[2].lastChild.textContent=t("diff_exp");
+    var sts=sc2.querySelectorAll(".surface-tile");
+    sts[0].lastChild.textContent=t("surf_asphalt"); sts[1].lastChild.textContent=t("surf_dirt"); sts[2].lastChild.textContent=t("surf_concrete");
+    var bts=sc2.querySelectorAll(".builder-tile");
+    bts[0].lastChild.textContent=t("builder_bs"); bts[1].lastChild.textContent=t("builder_vs");
+    bts[2].lastChild.textContent=t("builder_commune"); bts[3].lastChild.textContent=t("builder_asso");
+    bts[4].lastChild.textContent=t("builder_inconnu"); bts[5].lastChild.textContent=t("builder_other");
+  }
+  var sc3=document.getElementById("step-content-3");
+  if(sc3){
+    sc3.querySelectorAll(".step-card-title")[0].innerHTML=t("add_title_equip")+' <span class="optional-lbl">'+t("add_optional")+'</span>';
+    sc3.querySelectorAll(".step-card-title")[1].innerHTML=t("add_title_desc")+' <span class="optional-lbl">'+t("add_optional")+'</span>';
+    sc3.querySelector("textarea").placeholder=t("add_desc_ph");
+    var ets=sc3.querySelectorAll(".equip-tile");
+    ets[0].textContent=t("equip_light"); ets[1].textContent=t("equip_free"); ets[2].textContent=t("equip_toilets");
+    ets[3].textContent=t("equip_fountain"); ets[4].textContent=t("equip_picnic"); ets[5].textContent=t("equip_skate");
+    ets[6].textContent=t("equip_playground"); ets[7].textContent=t("equip_parking"); ets[8].textContent=t("equip_kids");
+    sc3.querySelector("div[style]").textContent=t("add_community");
+  }
+  document.getElementById("step-back-btn").textContent=t("add_back");
+  var nxt=document.getElementById("step-next-btn");
+  if(nxt) nxt.textContent=currentStep===3?t("add_submit"):t("add_next");
+  // Auth
+  document.getElementById("tab-login").textContent=t("auth_login");
+  document.getElementById("tab-register").textContent=t("auth_register");
+  document.querySelector("#auth-login .field:nth-child(1) label").textContent=t("auth_user");
+  document.querySelector("#auth-login .field:nth-child(2) label").textContent=t("auth_pass");
+  document.querySelector("#auth-login .forgot a").textContent=t("auth_forgot");
+  document.querySelector("#auth-login .btn-full").textContent=t("auth_signin");
+  document.querySelector("#auth-login .btn-ghost").textContent=t("auth_guest");
+  document.querySelector("#auth-register .field:nth-child(1) label").textContent=t("auth_pseudo");
+  document.querySelector("#auth-register .field:nth-child(2) label").textContent=t("auth_email");
+  document.querySelector("#auth-register .field:nth-child(3) label").textContent=t("auth_pass");
+  document.querySelector("#auth-register .field:nth-child(4) label").textContent=t("auth_confirm");
+  document.querySelector("#auth-register .cgu-row label").textContent=t("auth_cgu");
+  document.querySelector("#auth-register .btn-full").textContent=t("auth_create");
+  document.querySelector(".auth-bg div div").textContent=t("auth_tagline");
+  // Builders
+  BUILDERS.bs.desc=t("builder_desc_bs");
+  BUILDERS.vs.desc=t("builder_desc_vs");
+  BUILDERS.commune.desc=t("builder_desc_commune");
+  BUILDERS.asso.desc=t("builder_desc_asso");
+  BUILDERS.inconnu.desc=t("builder_desc_inconnu");
+}
+
 var BUILDERS = {
   bs:{label:"BikeSolutions",icon:"🟠",cls:"bs",desc:"Spécialiste français du pumptrack asphaltique",color:"#e65100"},
   vs:{label:"Velosolutions",icon:"🔵",cls:"vs",desc:"Leader mondial du pumptrack asphaltique",color:"#1565c0"},
@@ -933,16 +1140,16 @@ function togglePwd(id,btn){var el=document.getElementById(id);el.type=el.type===
 
 function renderProfile(){
   if(!currentUser){showScreen("auth-screen",null);return;}
-  var rBadge=currentUser.role==="admin"?"⚙️ Admin":currentUser.role==="guest"?"👀 Invité":"🚴 Rider";
+  var rBadge=currentUser.role==="admin"?"⚙️ Admin":currentUser.role==="guest"?"👀 "+t("auth_guest"):"🚴 Rider";
   document.getElementById("profile-content").innerHTML=
     '<div class="user-card"><div class="avatar">'+currentUser.avatar+'</div><div><div class="user-name">'+currentUser.username+'</div><span class="badge-role">'+rBadge+'</span>'+(currentUser.email?'<div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:3px">'+currentUser.email+'</div>':"")+'</div></div>'
-    +'<div class="stat-row"><div class="stat-card"><div class="stat-num">'+currentUser.contributions+'</div><div class="stat-lbl">Spots ajoutés</div></div><div class="stat-card"><div class="stat-num">'+favorites.size+'</div><div class="stat-lbl">Favoris</div></div><div class="stat-card"><div class="stat-num">'+SPOTS.length+'</div><div class="stat-lbl">Spots France</div></div></div>'
+    +'<div class="stat-row"><div class="stat-card"><div class="stat-num">'+currentUser.contributions+'</div><div class="stat-lbl">'+t("profile_spots")+'</div></div><div class="stat-card"><div class="stat-num">'+favorites.size+'</div><div class="stat-lbl">'+t("profile_favs")+'</div></div><div class="stat-card"><div class="stat-num">'+SPOTS.length+'</div><div class="stat-lbl">'+t("profile_total")+'</div></div></div>'
     +'<div class="menu-card">'
-    +'<div class="menu-item"><div class="menu-ico" style="background:#fff9c4">⭐</div><span class="menu-txt">Mes favoris</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item"><div class="menu-ico" style="background:var(--primary-pale)">🚴</div><span class="menu-txt">Mes spots ajoutés</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item" onclick="toggleLang()"><div class="menu-ico" style="background:#e3f2fd">🌍</div><span class="menu-txt">Langue : Français</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item"><div class="menu-ico" style="background:var(--gray)">⚙️</div><span class="menu-txt">Paramètres</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item" onclick="doLogout()"><div class="menu-ico" style="background:#fde8e8">🚪</div><span class="menu-txt" style="color:var(--red)">Se déconnecter</span></div>'
+    +'<div class="menu-item"><div class="menu-ico" style="background:#fff9c4">⭐</div><span class="menu-txt">'+t("profile_myfavs")+'</span><span class="menu-arrow">›</span></div>'
+    +'<div class="menu-item"><div class="menu-ico" style="background:var(--primary-pale)">🚴</div><span class="menu-txt">'+t("profile_myspots")+'</span><span class="menu-arrow">›</span></div>'
+    +'<div class="menu-item" onclick="toggleLang()"><div class="menu-ico" style="background:#e3f2fd">🌍</div><span class="menu-txt">'+t("profile_lang")+'</span><span class="menu-arrow">›</span></div>'
+    +'<div class="menu-item"><div class="menu-ico" style="background:var(--gray)">⚙️</div><span class="menu-txt">'+t("profile_settings")+'</span><span class="menu-arrow">›</span></div>'
+    +'<div class="menu-item" onclick="doLogout()"><div class="menu-ico" style="background:#fde8e8">🚪</div><span class="menu-txt" style="color:var(--red)">'+t("profile_logout")+'</span></div>'
     +'</div>';
 }
 
@@ -964,7 +1171,14 @@ function clearSearch(){
   map.setView([46.5,2.5],6);
   renderMarkers();renderList();
 }
-function toggleLang(){lang=lang==="fr"?"en":"fr";document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";renderList();if(currentUser)renderProfile();showToast(lang==="fr"?"🇫🇷 Français":"🇬🇧 English");}
+function toggleLang(){
+  lang=lang==="fr"?"en":"fr";
+  document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";
+  document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";
+  applyLang();
+  renderList();
+  if(currentUser) renderProfile();
+}
 
 function showScreen(id,btn){
   document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});
@@ -985,6 +1199,7 @@ function showScreen(id,btn){
 window.addEventListener("load",function(){
   SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
   initMap();
+  applyLang();
   currentUser={username:"Invité",role:"guest",contributions:0,avatar:"?"};
   document.getElementById("filter-bar").style.display="flex";
   showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
