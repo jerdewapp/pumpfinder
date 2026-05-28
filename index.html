@@ -524,6 +524,81 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 <script>
 var SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
 
+// ============ SUPABASE ============
+var SUPA_URL = 'https://bofoaaelxsjphjwbbtbc.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw';
+
+function supaFetch(path, options) {
+  return fetch(SUPA_URL + '/rest/v1/' + path, Object.assign({
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    }
+  }, options));
+}
+
+// Génère un device_id anonyme persisté en localStorage
+function getDeviceId() {
+  var id = localStorage.getItem('pf_device_id');
+  if (!id) { id = 'dev_' + Math.random().toString(36).substr(2,12); localStorage.setItem('pf_device_id', id); }
+  return id;
+}
+
+// Charge les spots communautaires et les fusionne avec SPOTS
+function loadCommunitySpots() {
+  supaFetch('spots_community?select=*&order=created_at.desc')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!Array.isArray(data)) return;
+      data.forEach(function(s){
+        var spot = {
+          id: 'c_' + s.id,
+          name: s.name, city: s.city||'', lat: s.lat, lng: s.lng,
+          diff: s.diff||'inter', surface: s.surface||'asphalt',
+          builder: s.builder||'inconnu', lit: !!s.lit, free: !!s.free, kids: !!s.kids,
+          desc: s.description||'', equip: s.equip||{},
+          status: s.status||'ok', status_msg: s.status_msg||'Ajouté par la communauté',
+          confirmations: s.confirmations||0, source: 'manual', photo: ''
+        };
+        // Evite les doublons si rechargement
+        if(!SPOTS.find(function(x){return x.id===spot.id;})) SPOTS.push(spot);
+      });
+      renderMarkers(); renderList();
+    })
+    .catch(function(e){ console.warn('Supabase load error:', e); });
+}
+
+// Sauvegarde un spot communautaire
+function saveSpotToSupabase(spot) {
+  return supaFetch('spots_community', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: spot.name, city: spot.city, lat: spot.lat, lng: spot.lng,
+      diff: spot.diff, surface: spot.surface, builder: spot.builder,
+      lit: spot.lit, free: spot.free, kids: spot.kids,
+      description: spot.desc, equip: spot.equip,
+      status: 'ok', status_msg: 'Ajouté par la communauté',
+      device_id: getDeviceId()
+    })
+  });
+}
+
+// Sauvegarde un signalement
+function saveReportToSupabase(spotId, source, status) {
+  return supaFetch('reports', {
+    method: 'POST',
+    body: JSON.stringify({
+      spot_id: String(spotId),
+      spot_source: source||'ourouler',
+      status: status,
+      device_id: getDeviceId()
+    })
+  });
+}
+// ============ FIN SUPABASE ============
+
 var LANG = {
   fr: {
     nav_map:"Carte", nav_list:"Liste", nav_add:"Ajouter", nav_profile:"Profil",
@@ -1012,7 +1087,16 @@ function showDetail(id) {
 
 function closeDetail(){document.getElementById("detail-panel").style.display="none";document.getElementById("overlay").classList.remove("show");}
 function toggleFav(id){favorites.has(id)?favorites.delete(id):favorites.add(id);var b=document.getElementById("fav-btn-"+id);if(b)b.textContent=favorites.has(id)?"⭐":"☆";showToast(favorites.has(id)?"⭐ Ajouté aux favoris":"Retiré des favoris");}
-function reportSpot(id,type){var s=SPOTS.find(function(x){return x.id===id;});if(!s)return;if(type==="ok"){s.status="ok";s.status_msg="Tout fonctionne ✅";s.confirmations++;}else if(type==="warn"){s.status="warn";s.status_msg="Problème signalé ⚠️";}else{s.status="hs";s.status_msg="🔴 Fermé";}showToast("Merci pour le signalement !");renderMarkers();showDetail(id);}
+function reportSpot(id,type){
+  var s=SPOTS.find(function(x){return x.id===id;}); if(!s) return;
+  if(type==="ok"){s.status="ok";s.status_msg="Tout fonctionne ✅";s.confirmations++;}
+  else if(type==="warn"){s.status="warn";s.status_msg="Problème signalé ⚠️";}
+  else{s.status="hs";s.status_msg="🔴 Fermé";}
+  saveReportToSupabase(id, s.source, type)
+    .catch(function(e){ console.warn('Report save error:', e); });
+  showToast("Merci pour le signalement !");
+  renderMarkers(); showDetail(id);
+}
 function navigate(lat,lng){showToast("🗺️ Ouverture itinéraire…");window.open("https://www.openstreetmap.org/directions?to="+lat+","+lng,"_blank");}
 
 function renderList() {
@@ -1107,28 +1191,48 @@ function submitSpot(){
   var equip={};
   document.querySelectorAll(".equip-tile.sel").forEach(function(t){
     var txt=t.textContent.trim();
-    if(txt.includes("Éclairage"))equip.lit=true;
-    if(txt.includes("libre"))equip.free=true;
-    if(txt.includes("Toilettes"))equip.toilets=true;
-    if(txt.includes("Fontaine"))equip.fountain=true;
+    if(txt.includes("Éclairage")||txt.includes("Lighting"))equip.lit=true;
+    if(txt.includes("libre")||txt.includes("Free"))equip.free=true;
+    if(txt.includes("Toilettes")||txt.includes("Toilets"))equip.toilets=true;
+    if(txt.includes("Fontaine")||txt.includes("Fountain"))equip.fountain=true;
     if(txt.includes("Picnic"))equip.picnic=true;
     if(txt.includes("Skatepark"))equip.skatepark=true;
-    if(txt.includes("jeux"))equip.playground=true;
+    if(txt.includes("jeux")||txt.includes("Playground"))equip.playground=true;
     if(txt.includes("Parking"))equip.parking=true;
     if(txt.includes("Kids"))equip.kidszone=true;
   });
-  var newSpot={id:Date.now(),name:n,city:document.getElementById("add-city").value.trim()||"",
-    lat:lat,lng:lng,alt:0,builder:selectedBuilder||"inconnu",diff:selectedDiff,
-    length:0,surface:selectedSurface||"asphalt",
-    lit:!!equip.lit,free:!!equip.free,kids:!!equip.kidszone,
-    photo:"",ourouler_url:"",status:"ok",status_msg:"Ajouté par la communauté",
-    confirmations:0,source:"manual",equip:equip,
-    desc:document.getElementById("add-desc").value.trim()};
-  SPOTS.push(newSpot);
-  renderMarkers();renderList();
-  showToast("✅ Spot ajouté !");
-  resetStepper();
-  showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
+  var newSpot={
+    id:'c_tmp_'+Date.now(), name:n,
+    city:document.getElementById("add-city").value.trim()||'',
+    lat:lat, lng:lng, alt:0, builder:selectedBuilder||'inconnu',
+    diff:selectedDiff, length:0, surface:selectedSurface||'asphalt',
+    lit:!!equip.lit, free:!!equip.free, kids:!!equip.kidszone,
+    photo:'', ourouler_url:'', status:'ok',
+    status_msg:'Ajouté par la communauté', confirmations:0,
+    source:'manual', equip:equip,
+    desc:document.getElementById("add-desc").value.trim()
+  };
+  showToast("⏳ Envoi en cours…");
+  saveSpotToSupabase(newSpot)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data[0] && data[0].id){
+        newSpot.id = 'c_' + data[0].id;
+      }
+      SPOTS.push(newSpot);
+      renderMarkers(); renderList();
+      showToast("✅ Spot ajouté !");
+      resetStepper();
+      showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
+    })
+    .catch(function(){
+      // Fallback local si pas de réseau
+      SPOTS.push(newSpot);
+      renderMarkers(); renderList();
+      showToast("✅ Spot ajouté (hors ligne)");
+      resetStepper();
+      showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
+    });
 }
 
 function doLogin(){var u=document.getElementById("login-user").value.trim(),p=document.getElementById("login-pass").value;if(!u||!p){showToast("⚠️ Champs requis");return;}var found=DEMO_ACCOUNTS.find(function(a){return a.username===u&&a.password===p;});if(!found){showToast("❌ Identifiants incorrects");return;}currentUser=Object.assign({},found);showToast("✅ Bienvenue "+currentUser.username+" !");showScreen("profile-screen",document.querySelectorAll(".nav-btn")[3]);}
@@ -1200,6 +1304,7 @@ window.addEventListener("load",function(){
   SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
   initMap();
   applyLang();
+  loadCommunitySpots();
   currentUser={username:"Invité",role:"guest",contributions:0,avatar:"?"};
   document.getElementById("filter-bar").style.display="flex";
   showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
