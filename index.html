@@ -246,6 +246,13 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 </head>
 <body>
 
+<div id="install-banner" style="display:none;position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:9999;background:#111;color:#fff;padding:10px 16px;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,0.3);">
+  <img src="icon-192.png" style="width:32px;height:32px;border-radius:8px;flex-shrink:0"/>
+  <div style="flex:1;font-size:13px;font-weight:600">Installer PumpFinder sur votre écran d'accueil</div>
+  <button onclick="doInstall()" style="background:var(--primary);border:none;color:#fff;padding:7px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font);flex-shrink:0">Installer</button>
+  <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#aaa;font-size:18px;cursor:pointer;flex-shrink:0">✕</button>
+</div>
+
 <div class="header">
   <div class="header-logo">
     <img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:42px;width:auto;display:block;" onerror="this.style.display='none'"/>
