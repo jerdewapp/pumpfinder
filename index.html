@@ -173,7 +173,8 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 .step-item-wrap{display:flex;flex-direction:column;align-items:center;position:relative;padding-bottom:14px;}
 .stepper-content{flex:1;overflow-y:auto;padding:18px;background:#f2f2f2;}
 .stepper-nav{display:flex;gap:10px;padding:12px 18px;background:#fff;border-top:1px solid #eee;flex-shrink:0;}
-.btn-step-next{flex:2;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);}
+.btn-step-next{flex:2;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);pointer-events:auto;}
+.btn-step-next *{pointer-events:none;}
 .btn-step-back{flex:1;padding:13px;background:#f2f2f2;color:#555;border:none;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);}
 .step-card{background:#fff;border-radius:var(--radius);padding:16px;margin-bottom:12px;}
 .step-card-title{font-size:11px;font-weight:800;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
