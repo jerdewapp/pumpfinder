@@ -556,10 +556,11 @@ var deferredPrompt = null;
 
 function detectBrowser() {
   var ua = navigator.userAgent;
-  var isIOS = /iPhone|iPad|iPod/.test(ua);
-  var isSafari = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS/.test(ua);
+  // iPad OS 13+ se présente comme MacOS — détection par touch
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isSafari = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
   var isFirefox = /Firefox|FxiOS/.test(ua);
-  var isChrome = /Chrome|CriOS/.test(ua) && !isFirefox;
+  var isChrome = (/Chrome|CriOS/.test(ua)) && !isFirefox;
   var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
   return {isIOS:isIOS, isSafari:isSafari, isFirefox:isFirefox, isChrome:isChrome, isStandalone:isStandalone};
 }
@@ -578,23 +579,19 @@ function showInstallPopup() {
   var mainBtn = document.getElementById('install-main-btn');
 
   if (b.isSafari) {
-    // Safari iOS — pas de beforeinstallprompt
-    instructions.innerHTML = '<strong>Sur Safari iOS :</strong><br>Appuyez sur <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⬆️ Partager</span> en bas de l\'écran, puis <strong>"Sur l\'écran d\'accueil"</strong>';
+    instructions.innerHTML = '<strong>Sur Safari iOS / iPadOS :</strong><br>Appuyez sur <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⬆️ Partager</span> dans la barre du navigateur, puis <strong>"Sur l\'écran d\'accueil"</strong> et confirmez avec <strong>"Ajouter"</strong>';
     mainBtn.textContent = "J'ai compris !";
     mainBtn.onclick = function(){ dismissInstall(); };
   } else if (b.isFirefox) {
-    // Firefox Android
-    instructions.innerHTML = '<strong>Sur Firefox :</strong><br>Appuyez sur le menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> en haut à droite, puis <strong>"Installer"</strong>';
+    instructions.innerHTML = '<strong>Sur Firefox Android :</strong><br>Appuyez sur le menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> en haut à droite, puis <strong>"Ajouter à l\'écran d\'accueil"</strong> et confirmez avec <strong>"Ajouter"</strong>';
     mainBtn.textContent = "J'ai compris !";
     mainBtn.onclick = function(){ dismissInstall(); };
   } else if (deferredPrompt) {
-    // Chrome avec beforeinstallprompt disponible
     instructions.innerHTML = '<strong>Installation en un clic</strong><br>Appuyez sur le bouton ci-dessous pour ajouter PumpFinder à votre écran d\'accueil.';
     mainBtn.textContent = '📲 Installer maintenant';
     mainBtn.onclick = function(){ doInstall(); };
   } else {
-    // Chrome sans beforeinstallprompt (déjà visité)
-    instructions.innerHTML = '<strong>Sur Chrome :</strong><br>Appuyez sur l\'icône <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⊕</span> dans la barre d\'adresse, ou le menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> → <strong>"Installer l\'application"</strong>';
+    instructions.innerHTML = '<strong>Sur Chrome Android :</strong><br>Appuyez sur le menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> en haut à droite → <strong>"Ajouter à l\'écran d\'accueil"</strong> → <strong>"Installer"</strong>';
     mainBtn.textContent = "J'ai compris !";
     mainBtn.onclick = function(){ dismissInstall(); };
   }
