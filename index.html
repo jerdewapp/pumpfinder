@@ -583,9 +583,12 @@ function showInstallPopup() {
     mainBtn.textContent = "J'ai compris !";
     mainBtn.onclick = function(){ dismissInstall(); };
   } else if (b.isFirefox) {
-    instructions.innerHTML = '<strong>Sur Firefox Android :</strong><br>Appuyez sur le menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> en haut à droite, puis <strong>"Ajouter à l\'écran d\'accueil"</strong> et confirmez avec <strong>"Ajouter"</strong>';
-    mainBtn.textContent = "J'ai compris !";
-    mainBtn.onclick = function(){ dismissInstall(); };
+    instructions.innerHTML = '<strong>Firefox ne supporte plus l\'installation de PWA.</strong><br>Pour installer PumpFinder, ouvrez cette page dans <strong>Chrome</strong> ou <strong>Samsung Internet</strong> et utilisez le menu d\'installation.';
+    mainBtn.textContent = 'Ouvrir dans Chrome';
+    mainBtn.onclick = function(){
+      window.open('https://jerdewapp.github.io/pumpfinder', '_blank');
+      dismissInstall();
+    };
   } else if (deferredPrompt) {
     instructions.innerHTML = '<strong>Installation en un clic</strong><br>Appuyez sur le bouton ci-dessous pour ajouter PumpFinder à votre écran d\'accueil.';
     mainBtn.textContent = '📲 Installer maintenant';
