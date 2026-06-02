@@ -1,4 +1,4 @@
-const CACHE = 'pumpfinder-v2';
+const CACHE = 'pumpfinder-v3';
 const ASSETS = [
   '/pumpfinder/',
   '/pumpfinder/index.html',
