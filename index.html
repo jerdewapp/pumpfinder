@@ -308,7 +308,7 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="showScreen('map-screen',this)">
+  <button class="nav-btn active" id="nav-map-btn" onclick="navMapClick(this)">
     <div class="nav-ico"><svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div>
     <span class="nav-lbl">Carte</span>
   </button>
@@ -1127,9 +1127,9 @@ function showDetail(id) {
   if(userPos){
     var d=dist(userPos.lat,userPos.lng,s.lat,s.lng);
     distBlock='<div class="dist-block"><div><div class="dist-num">'+fmtDist(d)+'</div>'
-      +'<div class="dist-lbl">de votre position</div>'
+      +'<div class="dist-lbl">'+t("detail_from_pos")+'</div>'
       +'<div class="dist-bike">🚴 ~'+Math.round(d/20*60)+' min</div></div>'
-      +(isNearest?'<div style="background:var(--primary);color:#fff;padding:7px 12px;border-radius:9px;font-size:12px;font-weight:700">⚡ Le plus proche</div>':"")
+      +(isNearest?'<div style="background:var(--primary);color:#fff;padding:7px 12px;border-radius:9px;font-size:12px;font-weight:700">'+t("detail_nearest")+'</div>':"")
       +'</div>';
   }
   var icoHtml=s.photo
@@ -1141,21 +1141,21 @@ function showDetail(id) {
     +'<div class="builder-desc">'+b.desc+'</div></div>'
     +(SOURCE_BADGE[s.source]||"")+'</div>';
   var eq=s.equip||{};
-  var eqItems=[{k:"toilets",fr:"🚻 Toilettes"},{k:"fountain",fr:"⛲ Fontaine"},{k:"picnic",fr:"🍽️ Picnic"},{k:"skatepark",fr:"🛹 Skatepark"},{k:"playground",fr:"🛝 Aire de jeux"},{k:"parking",fr:"🅿️ Parking"},{k:"kidszone",fr:"👶 Kids zone"}];
+  var eqItems=[{k:"toilets",fr:"🚻 "+t("equip_toilets").replace(/^../,"")},{k:"fountain",fr:"⛲ "+t("equip_fountain").replace(/^../,"")},{k:"picnic",fr:"🍽️ "+t("equip_picnic").replace(/^../,"")},{k:"skatepark",fr:"🛹 "+t("equip_skate").replace(/^../,"")},{k:"playground",fr:"🛝 "+t("equip_playground").replace(/^../,"")},{k:"parking",fr:"🅿️ "+t("equip_parking").replace(/^../,"")},{k:"kidszone",fr:"👶 "+t("equip_kids").replace(/^../,"")}];
   var eqPresent=eqItems.filter(function(e){return eq[e.k];});
-  var eqBlock='<div class="detail-section"><div class="section-title">⚙️ Équipements à proximité</div>'
-    +'<div class="equip-osm"><div class="equip-osm-lbl">📡 OSM + communauté</div>'
-    +'<div class="chip-grid">'+(eqPresent.length?eqPresent.map(function(e){return '<div class="info-chip equip">'+e.fr+'</div>';}).join(""):'<span style="font-size:12px;color:var(--gray3)">Aucun renseigné</span>')
+  var eqBlock='<div class="detail-section"><div class="section-title">'+t("detail_equip")+'</div>'
+    +'<div class="equip-osm"><div class="equip-osm-lbl">'+t("detail_osm_lbl")+'</div>'
+    +'<div class="chip-grid">'+(eqPresent.length?eqPresent.map(function(e){return '<div class="info-chip equip">'+e.fr+'</div>';}).join(""):'<span style="font-size:12px;color:var(--gray3)">'+t("detail_no_equip")+'</span>')
     +'</div></div></div>';
-  var caraBlock='<div class="detail-section"><div class="section-title">📋 Caractéristiques</div>'
+  var caraBlock='<div class="detail-section"><div class="section-title">'+t("detail_chars")+'</div>'
     +'<div class="chip-grid">'
     +(s.length?'<div class="info-chip yes">📏 '+s.length+'m</div>':"")
     +(s.alt?'<div class="info-chip yes">⛰️ '+s.alt+'m</div>':"")
     +'<div class="info-chip yes">🛣️ '+s.surface+'</div>'
-    +(s.lit?'<div class="info-chip yes">💡 Éclairé</div>':"")
-    +(s.free?'<div class="info-chip yes">🆓 Accès libre</div>':'<div class="info-chip">🎫 Payant</div>')
-    +(s.kids?'<div class="info-chip yes">👶 Kids OK</div>':"")
-    +(eq.playground?'<div class="info-chip yes">🛝 Aire de jeux</div>':"")
+    +(s.lit?'<div class="info-chip yes">'+t("chip_lit")+'</div>':"")
+    +(s.free?'<div class="info-chip yes">'+t("chip_free")+'</div>':'<div class="info-chip">🎫 '+(lang==="fr"?"Payant":"Paid")+'</div>')
+    +(s.kids?'<div class="info-chip yes">'+t("chip_kids")+'</div>':"")
+    +(eq.playground?'<div class="info-chip yes">'+t("chip_playground")+'</div>':"")
     +'<div class="'+df.cls+'">'+df.icon+" "+df.label[lang]+'</div>'
     +'</div></div>';
   var panel=document.getElementById("detail-panel");
@@ -1167,20 +1167,20 @@ function showDetail(id) {
     +'</div>'
     +distBlock+builderBlock+caraBlock+eqBlock
     +(s.photo?'<div class="detail-section"><img src="'+s.photo+'" style="width:100%;border-radius:var(--radius);object-fit:cover;max-height:180px;display:block" onerror="this.style.display=\'none\'"/></div>':"")
-    +(s.desc?'<div class="detail-section"><div class="section-title">💬 Description</div><div style="font-size:13px;line-height:1.6;color:var(--black)">'+s.desc+'</div></div>':"")
-    +(s.ourouler_url?'<div class="detail-section"><a href="'+s.ourouler_url+'" target="_blank" style="display:flex;align-items:center;gap:8px;background:#fff8f0;border:1.5px solid #e65100;border-radius:var(--radius-sm);padding:10px 14px;text-decoration:none"><span style="font-size:16px">🔗</span><span style="font-size:12px;font-weight:700;color:#e65100">Voir la fiche ourouler.com</span></a></div>':"")
-    +'<div class="detail-section"><div class="section-title">📊 État</div>'
+    +(s.desc?'<div class="detail-section"><div class="section-title">'+t("detail_desc")+'</div><div style="font-size:13px;line-height:1.6;color:var(--black)">'+s.desc+'</div></div>':"")
+    +(s.ourouler_url?'<div class="detail-section"><a href="'+s.ourouler_url+'" target="_blank" style="display:flex;align-items:center;gap:8px;background:#fff8f0;border:1.5px solid #e65100;border-radius:var(--radius-sm);padding:10px 14px;text-decoration:none"><span style="font-size:16px">🔗</span><span style="font-size:12px;font-weight:700;color:#e65100">'+t("detail_ourouler")+'</span></a></div>':"")
+    +'<div class="detail-section"><div class="section-title">'+t("detail_status")+'</div>'
     +'<div class="status-row"><span style="font-size:17px">'+sIco+'</span><span style="color:'+sCol+'">'+s.status_msg+'</span>'
     +'<span style="margin-left:auto;font-size:11px;color:var(--gray3)">✅ '+s.confirmations+' confirmations</span></div></div>'
-    +'<div class="detail-section"><div class="section-title">🚩 Signaler</div>'
+    +'<div class="detail-section"><div class="section-title">'+t("detail_report")+'</div>'
     +'<div class="report-grid">'
-    +'<button class="report-btn" style="border-color:var(--green);color:var(--green)" onclick="reportSpot('+s.id+',\'ok\')">✅ Tout ok</button>'
-    +'<button class="report-btn" style="border-color:var(--orange);color:var(--orange)" onclick="reportSpot('+s.id+',\'warn\')">⚠️ Problème</button>'
-    +'<button class="report-btn" style="border-color:var(--red);color:var(--red)" onclick="reportSpot('+s.id+',\'hs\')">🔴 Fermé</button>'
+    +'<button class="report-btn" style="border-color:var(--green);color:var(--green)" onclick="reportSpot(\''+s.id+'\',\'ok\')">'+t("report_ok")+'</button>'
+    +'<button class="report-btn" style="border-color:var(--orange);color:var(--orange)" onclick="reportSpot(\''+s.id+'\',\'warn\')">'+t("report_warn")+'</button>'
+    +'<button class="report-btn" style="border-color:var(--red);color:var(--red)" onclick="reportSpot(\''+s.id+'\',\'hs\')">'+t("report_hs")+'</button>'
     +'</div></div>'
     +'<div class="detail-actions">'
-    +'<button class="btn-primary" onclick="navigate('+s.lat+','+s.lng+')">🗺️ Itinéraire</button>'
-    +'<button class="btn-secondary" onclick="closeDetail()">✕</button>'
+    +'<button class="btn-primary" onclick="navigate('+s.lat+','+s.lng+')">'+t("detail_route")+'</button>'
+    +'<button class="btn-secondary" onclick="closeDetail()">'+t("detail_close")+'</button>'
     +'</div>';
   panel.style.display="block";
   document.getElementById("overlay").classList.add("show");
@@ -1209,7 +1209,16 @@ function renderList() {
   var el=document.getElementById("list-view");
   var filtered=SPOTS.filter(filterMatch);
   if(userPos) filtered=filtered.map(function(s){return Object.assign({},s,{_d:dist(userPos.lat,userPos.lng,s.lat,s.lng)});}).sort(function(a,b){return a._d-b._d;});
-  if(!filtered.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--gray3);font-weight:600">Aucun spot trouvé</div>';return;}
+  if(!filtered.length){
+    var filterName = activeFilter==="all" ? "" : (FILTER_PILL_CFG[activeFilter]?FILTER_PILL_CFG[activeFilter].label:activeFilter);
+    el.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;">'
+      +'<img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:36px;width:auto;margin-bottom:20px;opacity:0.35;"/>'
+      +'<div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px;">Pas de pumptrack ici… encore !</div>'
+      +'<div style="font-size:13px;color:#aaa;font-weight:500;line-height:1.6;margin-bottom:24px;">'+(filterName?'Aucun spot "'+filterName+'" trouvé dans cette zone.<br>':'Aucun spot trouvé dans cette zone.<br>')+'Essaie d\'élargir le rayon ou de changer de filtre.</div>'
+      +'<button onclick="resetFilters()" style="background:var(--primary);color:#fff;border:none;border-radius:12px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">Voir tous les spots</button>'
+      +'</div>';
+    return;
+  }
   var hdr=userPos?'<div style="font-size:11px;color:var(--gray3);font-weight:600;padding:2px 0 10px;text-align:center">📍 Triés par distance</div>':"";
   el.innerHTML=hdr+filtered.map(function(s,i){
     var b=BUILDERS[s.builder]||BUILDERS.inconnu;
@@ -1232,6 +1241,36 @@ function renderList() {
       +(s.status!=="ok"?'<span class="tag tag-red">'+s.status_msg+'</span>':'<span class="tag tag-green">✅</span>')
       +distTag+'</div></div></div>';
   }).join("");
+}
+
+function navMapClick(btn) {
+  var alreadyActive = btn.classList.contains("active");
+  showScreen("map-screen", btn);
+  if (alreadyActive) {
+    // Reset complet — retour France entière
+    userPos=null; searchPos=null; nearestId=null;
+    if(userMarker){userMarker.remove();userMarker=null;}
+    document.getElementById("nearest-banner").classList.remove("show");
+    document.getElementById("radius-bar").style.display="none";
+    if(searchOpen){searchOpen=false;document.getElementById("header-search").classList.remove("open");}
+    var si=document.getElementById("search-input");if(si)si.value="";
+    document.getElementById("search-clear").style.display="none";
+    activeFilter="all";
+    document.querySelectorAll(".chip,.chip-pill").forEach(function(c){c.classList.remove("active");});
+    document.querySelector(".chip[data-f='all']").classList.add("active");
+    updateFilterPill();
+    map.setView([46.5,2.5],6);
+    renderMarkers(); renderList();
+    showToast("🗺️ Vue France entière");
+  }
+}
+
+function resetFilters(){
+  activeFilter="all";
+  document.querySelectorAll(".chip,.chip-pill").forEach(function(c){c.classList.remove("active");});
+  document.querySelector(".chip[data-f='all']").classList.add("active");
+  updateFilterPill();
+  computeNearest(); renderMarkers(); renderList();
 }
 
 function openFromList(id){showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);setTimeout(function(){showDetail(id);},150);}
