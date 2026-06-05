@@ -252,9 +252,7 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 <!-- POPUP INSTALLATION UNIVERSEL -->
 <div id="install-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);">
   <div id="install-popup" style="background:#fff;width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:28px 24px 36px;box-shadow:0 -8px 40px rgba(0,0,0,0.3);">
-    <!-- Handle -->
     <div style="width:36px;height:4px;background:#e0e0e0;border-radius:2px;margin:0 auto 22px;"></div>
-    <!-- Header -->
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
       <img src="icon-192.png" style="width:56px;height:56px;border-radius:16px;flex-shrink:0;box-shadow:0 4px 12px rgba(224,0,15,0.25)"/>
       <div>
@@ -262,7 +260,6 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
         <div style="font-size:13px;color:#888;margin-top:2px;">Accès rapide depuis votre écran d'accueil</div>
       </div>
     </div>
-    <!-- Avantages -->
     <div style="background:#f8f8f8;border-radius:14px;padding:14px 16px;margin-bottom:20px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
         <span style="font-size:18px;">⚡</span><span style="font-size:13px;font-weight:600;color:#333;">Lancement instantané</span>
@@ -274,17 +271,25 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
         <span style="font-size:18px;">🗺️</span><span style="font-size:13px;font-weight:600;color:#333;">1229 pumptracks de France</span>
       </div>
     </div>
-    <!-- Instructions selon navigateur -->
     <div id="install-instructions" style="background:rgba(224,0,15,0.05);border:1.5px solid rgba(224,0,15,0.15);border-radius:14px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#333;line-height:1.7;"></div>
-    <!-- Boutons -->
     <button id="install-main-btn" onclick="doInstall()" style="width:100%;padding:15px;background:#e0000f;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-bottom:10px;">Installer l'application</button>
     <button onclick="dismissInstall()" style="width:100%;padding:12px;background:transparent;color:#888;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);">Plus tard</button>
   </div>
 </div>
 
+<!-- ============ HEADER ============ -->
 <div class="header">
   <div class="header-logo">
-    <img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:42px;width:auto;display:block;" onerror="this.style.display='none'"/>
+    <!-- Logo PumpFinder -->
+    <img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:38px;width:auto;display:block;" onerror="this.style.display='none'"/>
+    <!-- Séparateur -->
+    <div style="width:1px;height:24px;background:#e0e0e0;margin:0 10px;flex-shrink:0;"></div>
+    <!-- Croix -->
+    <span style="font-size:11px;font-weight:700;color:#bbb;letter-spacing:.3px;margin-right:8px;flex-shrink:0;">×</span>
+    <!-- Logo ourouler -->
+    <a href="https://www.ourouler.com" target="_blank" style="display:flex;align-items:center;line-height:0;">
+      <img src="ourouler-logo.svg" style="height:26px;width:auto;display:block;" onerror="this.style.display='none'"/>
+    </a>
   </div>
   <div class="header-actions">
     <button class="header-btn" onclick="toggleSearch()">
@@ -337,24 +342,16 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
     </div>
     <div class="chip" data-f="kids" onclick="toggleFilter(this,'kids')">
       <svg class="bumps" width="20" height="20" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="58" cy="196" r="22"/>
-        <circle cx="186" cy="196" r="22"/>
-        <path d="M80 196h82"/>
-        <path d="M58 174l24-82"/>
-        <path d="M82 92l8-54"/>
-        <path d="M58 38h52"/>
-        <path d="M162 196l18-52"/>
+        <circle cx="58" cy="196" r="22"/><circle cx="186" cy="196" r="22"/>
+        <path d="M80 196h82"/><path d="M58 174l24-82"/><path d="M82 92l8-54"/>
+        <path d="M58 38h52"/><path d="M162 196l18-52"/>
       </svg>
       <span class="chip-lbl">Kid Zone</span>
     </div>
     <div class="chip" data-f="playground" onclick="toggleFilter(this,'playground')">
       <svg class="bumps" width="20" height="20" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M74 58v138"/>
-        <path d="M74 58h72"/>
-        <path d="M146 58v138"/>
-        <path d="M74 92H40"/>
-        <path d="M74 124H40"/>
-        <path d="M74 156H40"/>
+        <path d="M74 58v138"/><path d="M74 58h72"/><path d="M146 58v138"/>
+        <path d="M74 92H40"/><path d="M74 124H40"/><path d="M74 156H40"/>
         <path d="M146 58 C182 64 196 94 204 118 C212 142 224 164 236 172"/>
         <path d="M26 196h208"/>
       </svg>
@@ -556,7 +553,6 @@ var deferredPrompt = null;
 
 function detectBrowser() {
   var ua = navigator.userAgent;
-  // iPad OS 13+ se présente comme MacOS — détection par touch
   var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var isSafari = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
   var isFirefox = /Firefox|FxiOS/.test(ua);
@@ -572,12 +568,10 @@ window.addEventListener('beforeinstallprompt', function(e) {
 
 function showInstallPopup() {
   var b = detectBrowser();
-  if (b.isStandalone) return; // déjà installée
-  if (localStorage.getItem('pf_install_dismissed')) return; // déjà refusé
-
+  if (b.isStandalone) return;
+  if (localStorage.getItem('pf_install_dismissed')) return;
   var instructions = document.getElementById('install-instructions');
   var mainBtn = document.getElementById('install-main-btn');
-
   if (b.isSafari) {
     instructions.innerHTML = '<strong>Sur Safari iOS / iPadOS :</strong><br>Appuyez sur <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⬆️ Partager</span> dans la barre du navigateur, puis <strong>"Sur l\'écran d\'accueil"</strong> et confirmez avec <strong>"Ajouter"</strong>';
     mainBtn.textContent = "J'ai compris !";
@@ -585,10 +579,7 @@ function showInstallPopup() {
   } else if (b.isFirefox) {
     instructions.innerHTML = '<strong>Firefox ne supporte plus l\'installation de PWA.</strong><br>Pour installer PumpFinder, ouvrez cette page dans <strong>Chrome</strong> ou <strong>Samsung Internet</strong> et utilisez le menu d\'installation.';
     mainBtn.textContent = 'Ouvrir dans Chrome';
-    mainBtn.onclick = function(){
-      window.open('https://jerdewapp.github.io/pumpfinder', '_blank');
-      dismissInstall();
-    };
+    mainBtn.onclick = function(){ window.open('https://jerdewapp.github.io/pumpfinder', '_blank'); dismissInstall(); };
   } else if (deferredPrompt) {
     instructions.innerHTML = '<strong>Installation en un clic</strong><br>Appuyez sur le bouton ci-dessous pour ajouter PumpFinder à votre écran d\'accueil.';
     mainBtn.textContent = '📲 Installer maintenant';
@@ -598,10 +589,8 @@ function showInstallPopup() {
     mainBtn.textContent = "J'ai compris !";
     mainBtn.onclick = function(){ dismissInstall(); };
   }
-
   var overlay = document.getElementById('install-overlay');
   overlay.style.display = 'flex';
-  // Animation slide-up
   var popup = document.getElementById('install-popup');
   popup.style.transform = 'translateY(100%)';
   popup.style.transition = 'transform .35s ease';
@@ -612,21 +601,14 @@ function dismissInstall() {
   localStorage.setItem('pf_install_dismissed', '1');
   var popup = document.getElementById('install-popup');
   popup.style.transform = 'translateY(100%)';
-  setTimeout(function(){
-    document.getElementById('install-overlay').style.display = 'none';
-  }, 350);
+  setTimeout(function(){ document.getElementById('install-overlay').style.display = 'none'; }, 350);
 }
 
 function doInstall() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(result) {
-      deferredPrompt = null;
-      dismissInstall();
-    });
-  } else {
-    dismissInstall();
-  }
+    deferredPrompt.userChoice.then(function(result) { deferredPrompt = null; dismissInstall(); });
+  } else { dismissInstall(); }
 }
 // ============ FIN INSTALL POPUP ============
 
@@ -645,14 +627,12 @@ function supaFetch(path, options) {
   }, options));
 }
 
-// Génère un device_id anonyme persisté en localStorage
 function getDeviceId() {
   var id = localStorage.getItem('pf_device_id');
   if (!id) { id = 'dev_' + Math.random().toString(36).substr(2,12); localStorage.setItem('pf_device_id', id); }
   return id;
 }
 
-// Charge les spots communautaires et les fusionne avec SPOTS
 function loadCommunitySpots() {
   supaFetch('spots_community?select=*&order=created_at.desc')
     .then(function(r){ return r.json(); })
@@ -660,15 +640,12 @@ function loadCommunitySpots() {
       if(!Array.isArray(data)) return;
       data.forEach(function(s){
         var spot = {
-          id: 'c_' + s.id,
-          name: s.name, city: s.city||'', lat: s.lat, lng: s.lng,
-          diff: s.diff||'inter', surface: s.surface||'asphalt',
-          builder: s.builder||'inconnu', lit: !!s.lit, free: !!s.free, kids: !!s.kids,
-          desc: s.description||'', equip: s.equip||{},
+          id: 'c_' + s.id, name: s.name, city: s.city||'', lat: s.lat, lng: s.lng,
+          diff: s.diff||'inter', surface: s.surface||'asphalt', builder: s.builder||'inconnu',
+          lit: !!s.lit, free: !!s.free, kids: !!s.kids, desc: s.description||'', equip: s.equip||{},
           status: s.status||'ok', status_msg: s.status_msg||'Ajouté par la communauté',
           confirmations: s.confirmations||0, source: 'manual', photo: ''
         };
-        // Evite les doublons si rechargement
         if(!SPOTS.find(function(x){return x.id===spot.id;})) SPOTS.push(spot);
       });
       renderMarkers(); renderList();
@@ -676,7 +653,6 @@ function loadCommunitySpots() {
     .catch(function(e){ console.warn('Supabase load error:', e); });
 }
 
-// Sauvegarde un spot communautaire
 function saveSpotToSupabase(spot) {
   return supaFetch('spots_community', {
     method: 'POST',
@@ -685,22 +661,15 @@ function saveSpotToSupabase(spot) {
       diff: spot.diff, surface: spot.surface, builder: spot.builder,
       lit: spot.lit, free: spot.free, kids: spot.kids,
       description: spot.desc, equip: spot.equip,
-      status: 'ok', status_msg: 'Ajouté par la communauté',
-      device_id: getDeviceId()
+      status: 'ok', status_msg: 'Ajouté par la communauté', device_id: getDeviceId()
     })
   });
 }
 
-// Sauvegarde un signalement
 function saveReportToSupabase(spotId, source, status) {
   return supaFetch('reports', {
     method: 'POST',
-    body: JSON.stringify({
-      spot_id: String(spotId),
-      spot_source: source||'ourouler',
-      status: status,
-      device_id: getDeviceId()
-    })
+    body: JSON.stringify({ spot_id: String(spotId), spot_source: source||'ourouler', status: status, device_id: getDeviceId() })
   });
 }
 // ============ FIN SUPABASE ============
@@ -712,8 +681,7 @@ var LANG = {
     filter_dirt:"Terre", filter_lit:"Éclairé", filter_free:"Accès libre",
     search_placeholder:"Rechercher une ville…",
     nearest_tag:"⚡ Pumptrack le plus proche",
-    install_msg:"Installer PumpFinder sur votre écran d'accueil",
-    install_btn:"Installer",
+    install_msg:"Installer PumpFinder sur votre écran d'accueil", install_btn:"Installer",
     detail_chars:"📋 Caractéristiques", detail_equip:"⚙️ Équipements à proximité",
     detail_desc:"💬 Description", detail_status:"📊 État", detail_report:"🚩 Signaler",
     detail_osm_lbl:"📡 OSM + communauté", detail_no_equip:"Aucun renseigné",
@@ -748,15 +716,13 @@ var LANG = {
     auth_signin:"Se connecter", auth_guest:"Continuer sans compte",
     auth_pseudo:"Pseudo", auth_email:"Email", auth_confirm:"Confirmer",
     auth_cgu:"J'accepte les conditions d'utilisation", auth_create:"Créer mon compte",
-    auth_tagline:"Trouve tous les pumptracks de France",
-    radius_label:"📡 Rayon",
+    auth_tagline:"Trouve tous les pumptracks de France", radius_label:"📡 Rayon",
     builder_desc_bs:"Spécialiste français du pumptrack asphaltique",
     builder_desc_vs:"Leader mondial du pumptrack asphaltique",
     builder_desc_commune:"Réalisation municipale",
     builder_desc_asso:"Construit par une association locale",
     builder_desc_inconnu:"Constructeur non renseigné",
-    no_spot:"Aucun spot trouvé",
-    or:"ou",
+    no_spot:"Aucun spot trouvé", or:"ou",
   },
   en: {
     nav_map:"Map", nav_list:"List", nav_add:"Add", nav_profile:"Profile",
@@ -764,8 +730,7 @@ var LANG = {
     filter_dirt:"Dirt", filter_lit:"Lit", filter_free:"Free access",
     search_placeholder:"Search a city…",
     nearest_tag:"⚡ Nearest pumptrack",
-    install_msg:"Install PumpFinder on your home screen",
-    install_btn:"Install",
+    install_msg:"Install PumpFinder on your home screen", install_btn:"Install",
     detail_chars:"📋 Features", detail_equip:"⚙️ Nearby amenities",
     detail_desc:"💬 Description", detail_status:"📊 Status", detail_report:"🚩 Report",
     detail_osm_lbl:"📡 OSM + community", detail_no_equip:"None listed",
@@ -800,57 +765,41 @@ var LANG = {
     auth_signin:"Sign in", auth_guest:"Continue without account",
     auth_pseudo:"Username", auth_email:"Email", auth_confirm:"Confirm",
     auth_cgu:"I accept the terms of use", auth_create:"Create account",
-    auth_tagline:"Find all pumptracks in France",
-    radius_label:"📡 Radius",
+    auth_tagline:"Find all pumptracks in France", radius_label:"📡 Radius",
     builder_desc_bs:"French asphalt pumptrack specialist",
     builder_desc_vs:"World leader in asphalt pumptracks",
     builder_desc_commune:"Municipal build",
     builder_desc_asso:"Built by a local association",
     builder_desc_inconnu:"Builder unknown",
-    no_spot:"No spots found",
-    or:"or",
+    no_spot:"No spots found", or:"or",
   }
 };
 
 function t(k){ return (LANG[lang]&&LANG[lang][k]) ? LANG[lang][k] : (LANG.fr[k]||k); }
 
 function applyLang() {
-  // Nav
   document.querySelectorAll(".nav-lbl")[0].textContent=t("nav_map");
   document.querySelectorAll(".nav-lbl")[1].textContent=t("nav_list");
   document.querySelectorAll(".nav-lbl")[2].textContent=t("nav_add");
   document.querySelectorAll(".nav-lbl")[3].textContent=t("nav_profile");
-  // Filtres barre principale — ne touche qu'au .chip-lbl, préserve les SVG
   document.querySelector(".chip[data-f='all'] .chip-lbl").textContent=t("filter_all");
   document.querySelector(".chip[data-f='kids'] .chip-lbl").textContent=t("filter_kids");
   document.querySelector(".chip[data-f='playground'] .chip-lbl").textContent=t("filter_playground");
   document.querySelector(".chip[data-f='skatepark'] .chip-lbl").textContent=t("filter_skatepark");
-  // Filtres tiroir — ne touche qu'au nœud texte final, préserve les SVG
   function setPillText(sel, txt) {
-    var el=document.querySelector(sel);
-    if(!el) return;
+    var el=document.querySelector(sel); if(!el) return;
     var nodes=Array.from(el.childNodes).filter(function(n){return n.nodeType===3;});
     if(nodes.length) nodes[nodes.length-1].textContent=" "+txt;
   }
   setPillText(".chip-pill[data-f='dirt']", t("filter_dirt"));
   setPillText(".chip-pill[data-f='lit']",  t("filter_lit"));
   setPillText(".chip-pill[data-f='free']", t("filter_free"));
-  // Search
   document.getElementById("search-input").placeholder=t("search_placeholder");
-  // Nearest banner
   document.querySelector(".nb-tag").textContent=t("nearest_tag");
-  // Radius
   document.querySelector(".radius-bar label").textContent=t("radius_label");
-  // Install banner
-  var ib=document.querySelector("#install-banner div");
-  if(ib) ib.textContent=t("install_msg");
-  var ibtn=document.querySelector("#install-banner button");
-  if(ibtn) ibtn.textContent=t("install_btn");
-  // Stepper labels
   document.querySelectorAll(".step-lbl")[0].textContent=t("add_step1");
   document.querySelectorAll(".step-lbl")[1].textContent=t("add_step2");
   document.querySelectorAll(".step-lbl")[2].textContent=t("add_step3");
-  // Stepper content
   var sc1=document.getElementById("step-content-1");
   if(sc1){
     sc1.querySelector(".step-card-title").textContent=t("add_title_loc");
@@ -858,8 +807,7 @@ function applyLang() {
     var labels=sc1.querySelectorAll(".field label");
     labels[0].textContent=t("add_name"); sc1.querySelector("#add-name").placeholder=t("add_name_ph");
     labels[1].textContent=t("add_city"); sc1.querySelector("#add-city").placeholder=t("add_city_ph");
-    labels[2].textContent=t("add_lat");
-    labels[3].textContent=t("add_lng");
+    labels[2].textContent=t("add_lat"); labels[3].textContent=t("add_lng");
   }
   var sc2=document.getElementById("step-content-2");
   if(sc2){
@@ -889,7 +837,6 @@ function applyLang() {
   document.getElementById("step-back-btn").textContent=t("add_back");
   var nxt=document.getElementById("step-next-btn");
   if(nxt) nxt.textContent=currentStep===3?t("add_submit"):t("add_next");
-  // Auth
   document.getElementById("tab-login").textContent=t("auth_login");
   document.getElementById("tab-register").textContent=t("auth_register");
   document.querySelector("#auth-login .field:nth-child(1) label").textContent=t("auth_user");
@@ -904,11 +851,8 @@ function applyLang() {
   document.querySelector("#auth-register .cgu-row label").textContent=t("auth_cgu");
   document.querySelector("#auth-register .btn-full").textContent=t("auth_create");
   document.querySelector(".auth-bg div div").textContent=t("auth_tagline");
-  // Builders
-  BUILDERS.bs.desc=t("builder_desc_bs");
-  BUILDERS.vs.desc=t("builder_desc_vs");
-  BUILDERS.commune.desc=t("builder_desc_commune");
-  BUILDERS.asso.desc=t("builder_desc_asso");
+  BUILDERS.bs.desc=t("builder_desc_bs"); BUILDERS.vs.desc=t("builder_desc_vs");
+  BUILDERS.commune.desc=t("builder_desc_commune"); BUILDERS.asso.desc=t("builder_desc_asso");
   BUILDERS.inconnu.desc=t("builder_desc_inconnu");
 }
 
@@ -982,14 +926,12 @@ function initMap() {
 }
 
 function renderMarkers() {
-  clusterGroup.clearLayers();
-  markers=[];
+  clusterGroup.clearLayers(); markers=[];
   SPOTS.filter(filterMatch).forEach(function(s) {
     var isN=userPos&&s.id===nearestId;
     var m=L.marker([s.lat,s.lng],{icon:makeMarker(s,isN),zIndexOffset:isN?1000:0});
     m.on("click",function(){showDetail(s.id);});
-    clusterGroup.addLayer(m);
-    markers.push(m);
+    clusterGroup.addLayer(m); markers.push(m);
   });
 }
 
@@ -1056,16 +998,13 @@ function updateFilterPill() {
   var cfg=FILTER_PILL_CFG[activeFilter];
   if(!cfg){pill.classList.remove("show");return;}
   var count=SPOTS.filter(filterMatch).length;
-  pill.style.background=cfg.bg;
-  pill.style.color=cfg.color;
-  pill.style.border="1.5px solid "+cfg.color;
+  pill.style.background=cfg.bg; pill.style.color=cfg.color; pill.style.border="1.5px solid "+cfg.color;
   pill.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:'+cfg.color+';display:inline-block;flex-shrink:0"></span>'+cfg.label+' — '+count+' spot'+(count>1?"s":"");
   pill.classList.add("show");
 }
 
 function doGeoSearch(q) {
-  q = q.trim();
-  if(!q) return;
+  q = q.trim(); if(!q) return;
   document.getElementById("search-clear").style.display="block";
   showToast("🔍 Recherche de "+q+"…");
   fetch("https://nominatim.openstreetmap.org/search?q="+encodeURIComponent(q)+"&countrycodes=fr&format=json&limit=1",{headers:{"Accept-Language":"fr"}})
@@ -1073,9 +1012,7 @@ function doGeoSearch(q) {
     .then(function(data){
       if(!data||!data.length){showToast("❌ Ville introuvable");return;}
       searchPos={lat:parseFloat(data[0].lat),lng:parseFloat(data[0].lon),label:data[0].display_name.split(",")[0]};
-      userPos=searchPos;
-      placeUserMarker();
-      computeNearest();
+      userPos=searchPos; placeUserMarker(); computeNearest();
       map.setView([userPos.lat,userPos.lng],11);
       renderMarkers(); updateNearestBanner(); renderList();
       document.getElementById("radius-bar").style.display="flex";
@@ -1087,10 +1024,7 @@ function doGeoSearch(q) {
 
 function filterMatch(s) {
   var pos=userPos||searchPos;
-  if(pos && osmRadius){
-    var d=dist(pos.lat,pos.lng,s.lat,s.lng);
-    if(d>osmRadius) return false;
-  }
+  if(pos && osmRadius){ var d=dist(pos.lat,pos.lng,s.lat,s.lng); if(d>osmRadius) return false; }
   if(activeFilter==="all") return true;
   if(activeFilter==="kids") return s.kids===true;
   if(activeFilter==="playground") return s.equip && s.equip.playground===true;
@@ -1198,10 +1132,8 @@ function reportSpot(id,type){
   if(type==="ok"){s.status="ok";s.status_msg="Tout fonctionne ✅";s.confirmations++;}
   else if(type==="warn"){s.status="warn";s.status_msg="Problème signalé ⚠️";}
   else{s.status="hs";s.status_msg="🔴 Fermé";}
-  saveReportToSupabase(id, s.source, type)
-    .catch(function(e){ console.warn('Report save error:', e); });
-  showToast("Merci pour le signalement !");
-  renderMarkers(); showDetail(id);
+  saveReportToSupabase(id, s.source, type).catch(function(e){ console.warn('Report save error:', e); });
+  showToast("Merci pour le signalement !"); renderMarkers(); showDetail(id);
 }
 function navigate(lat,lng){showToast("🗺️ Ouverture itinéraire…");window.open("https://www.openstreetmap.org/directions?to="+lat+","+lng,"_blank");}
 
@@ -1247,7 +1179,6 @@ function navMapClick(btn) {
   var alreadyActive = btn.classList.contains("active");
   showScreen("map-screen", btn);
   if (alreadyActive) {
-    // Reset complet — retour France entière
     userPos=null; searchPos=null; nearestId=null;
     if(userMarker){userMarker.remove();userMarker=null;}
     document.getElementById("nearest-banner").classList.remove("show");
@@ -1258,10 +1189,8 @@ function navMapClick(btn) {
     activeFilter="all";
     document.querySelectorAll(".chip,.chip-pill").forEach(function(c){c.classList.remove("active");});
     document.querySelector(".chip[data-f='all']").classList.add("active");
-    updateFilterPill();
-    map.setView([46.5,2.5],6);
-    renderMarkers(); renderList();
-    showToast("🗺️ Vue France entière");
+    updateFilterPill(); map.setView([46.5,2.5],6);
+    renderMarkers(); renderList(); showToast("🗺️ Vue France entière");
   }
 }
 
@@ -1269,12 +1198,10 @@ function resetFilters(){
   activeFilter="all";
   document.querySelectorAll(".chip,.chip-pill").forEach(function(c){c.classList.remove("active");});
   document.querySelector(".chip[data-f='all']").classList.add("active");
-  updateFilterPill();
-  computeNearest(); renderMarkers(); renderList();
+  updateFilterPill(); computeNearest(); renderMarkers(); renderList();
 }
 
 function openFromList(id){showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);setTimeout(function(){showDetail(id);},150);}
-
 function selDiffTile(el,val){document.querySelectorAll(".diff-tile").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");selectedDiff=val;}
 function selSurfaceTile(el,val){document.querySelectorAll(".surface-tile").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");selectedSurface=val;}
 function selBuilderTile(el,val){document.querySelectorAll(".builder-tile").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");selectedBuilder=val;}
@@ -1305,9 +1232,7 @@ function stepNext(){
     if(!selectedSurface){showToast("⚠️ Sélectionnez une surface");return;}
     if(!selectedBuilder){showToast("⚠️ Sélectionnez un constructeur");return;}
     goToStep(3);
-  } else {
-    submitSpot();
-  }
+  } else { submitSpot(); }
 }
 
 function stepBack(){if(currentStep>1)goToStep(currentStep-1);}
@@ -1354,28 +1279,20 @@ function submitSpot(){
     lit:!!equip.lit, free:!!equip.free, kids:!!equip.kidszone,
     photo:'', ourouler_url:'', status:'ok',
     status_msg:'Ajouté par la communauté', confirmations:0,
-    source:'manual', equip:equip,
-    desc:document.getElementById("add-desc").value.trim()
+    source:'manual', equip:equip, desc:document.getElementById("add-desc").value.trim()
   };
   showToast("⏳ Envoi en cours…");
   saveSpotToSupabase(newSpot)
     .then(function(r){ return r.json(); })
     .then(function(data){
-      if(data && data[0] && data[0].id){
-        newSpot.id = 'c_' + data[0].id;
-      }
-      SPOTS.push(newSpot);
-      renderMarkers(); renderList();
-      showToast("✅ Spot ajouté !");
-      resetStepper();
+      if(data && data[0] && data[0].id){ newSpot.id = 'c_' + data[0].id; }
+      SPOTS.push(newSpot); renderMarkers(); renderList();
+      showToast("✅ Spot ajouté !"); resetStepper();
       showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
     })
     .catch(function(){
-      // Fallback local si pas de réseau
-      SPOTS.push(newSpot);
-      renderMarkers(); renderList();
-      showToast("✅ Spot ajouté (hors ligne)");
-      resetStepper();
+      SPOTS.push(newSpot); renderMarkers(); renderList();
+      showToast("✅ Spot ajouté (hors ligne)"); resetStepper();
       showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
     });
 }
@@ -1408,24 +1325,19 @@ function showToast(msg){var el=document.getElementById("toast");el.textContent=m
 function toggleSearch(){searchOpen=!searchOpen;document.getElementById("header-search").classList.toggle("open",searchOpen);if(searchOpen)setTimeout(function(){document.getElementById("search-input").focus();},320);else clearSearch();}
 function onSearch(v){}
 function clearSearch(){
-  searchPos=null;
-  searchQuery="";
-  userPos=null;
+  searchPos=null; searchQuery=""; userPos=null;
   if(userMarker){userMarker.remove();userMarker=null;}
   var el=document.getElementById("search-input");if(el)el.value="";
   document.getElementById("search-clear").style.display="none";
   document.getElementById("nearest-banner").classList.remove("show");
   document.getElementById("radius-bar").style.display="none";
-  nearestId=null;
-  map.setView([46.5,2.5],6);
-  renderMarkers();renderList();
+  nearestId=null; map.setView([46.5,2.5],6); renderMarkers(); renderList();
 }
 function toggleLang(){
   lang=lang==="fr"?"en":"fr";
   document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";
   document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";
-  applyLang();
-  renderList();
+  applyLang(); renderList();
   if(currentUser) renderProfile();
 }
 
@@ -1447,13 +1359,10 @@ function showScreen(id,btn){
 
 window.addEventListener("load",function(){
   SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
-  initMap();
-  applyLang();
-  loadCommunitySpots();
+  initMap(); applyLang(); loadCommunitySpots();
   currentUser={username:"Invité",role:"guest",contributions:0,avatar:"?"};
   document.getElementById("filter-bar").style.display="flex";
   showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
-  // Popup installation — 2s après chargement
   setTimeout(showInstallPopup, 2000);
 });
 </script>
