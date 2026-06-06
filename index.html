@@ -564,30 +564,48 @@ var supabaseClient = supabase.createClient(
 
 var lastRegEmail = '';
 
-async function doLogin() {
+function setCurrentUser(user) {
+  currentUser = {
+    username: user.user_metadata.username || user.email.split('@')[0],
+    email: user.email,
+    role: user.user_metadata.role || 'contrib',
+    contributions: 0,
+    avatar: (user.user_metadata.username || user.email)[0].toUpperCase()
+  };
+}
+
+function initAuth() {
+  return supabaseClient.auth.getSession().then(function(res) {
+    if (res.data && res.data.session) {
+      setCurrentUser(res.data.session.user);
+    } else {
+      currentUser = { username: 'Invité', role: 'guest', contributions: 0, avatar: '?' };
+    }
+  }).catch(function() {
+    currentUser = { username: 'Invité', role: 'guest', contributions: 0, avatar: '?' };
+  });
+}
+
+function doLogin() {
   var u = document.getElementById('login-user').value.trim();
   var p = document.getElementById('login-pass').value;
   if (!u || !p) { showToast('⚠️ Champs requis'); return; }
   showToast('⏳ Connexion…');
-  var { data, error } = await supabaseClient.auth.signInWithPassword({ email: u, password: p });
-  if (error) {
-    if (error.message.includes('Email not confirmed')) showToast('📧 Confirme ton email d\'abord');
-    else if (error.message.includes('Invalid login')) showToast('❌ Email ou mot de passe incorrect');
-    else showToast('❌ ' + error.message);
-    return;
-  }
-  currentUser = {
-    username: data.user.user_metadata.username || data.user.email.split('@')[0],
-    email: data.user.email,
-    role: data.user.user_metadata.role || 'contrib',
-    contributions: 0,
-    avatar: (data.user.user_metadata.username || data.user.email)[0].toUpperCase()
-  };
-  showToast('✅ Bienvenue ' + currentUser.username + ' !');
-  showScreen('profile-screen', document.querySelectorAll('.nav-btn')[3]);
+  supabaseClient.auth.signInWithPassword({ email: u, password: p }).then(function(res) {
+    if (res.error) {
+      var msg = res.error.message;
+      if (msg.includes('Email not confirmed')) showToast('📧 Confirme ton email d\'abord');
+      else if (msg.includes('Invalid login') || msg.includes('invalid_credentials')) showToast('❌ Email ou mot de passe incorrect');
+      else showToast('❌ ' + msg);
+      return;
+    }
+    setCurrentUser(res.data.user);
+    showToast('✅ Bienvenue ' + currentUser.username + ' !');
+    showScreen('profile-screen', document.querySelectorAll('.nav-btn')[3]);
+  }).catch(function(e) { showToast('❌ Erreur de connexion'); });
 }
 
-async function doRegister() {
+function doRegister() {
   var u = document.getElementById('reg-user').value.trim();
   var e = document.getElementById('reg-email').value.trim();
   var p = document.getElementById('reg-pass').value;
@@ -597,55 +615,43 @@ async function doRegister() {
   if (p.length < 6) { showToast('❌ Mot de passe trop court (6 min)'); return; }
   if (!document.getElementById('reg-cgu').checked) { showToast('⚠️ Acceptez les CGU'); return; }
   showToast('⏳ Création du compte…');
-  var { data, error } = await supabaseClient.auth.signUp({
+  supabaseClient.auth.signUp({
     email: e, password: p,
     options: { data: { username: u, role: 'contrib' } }
-  });
-  if (error) { showToast('❌ ' + error.message); return; }
-  lastRegEmail = e;
-  document.getElementById('confirm-msg').innerHTML =
-    'Un lien de confirmation a été envoyé à <strong>' + e + '</strong>.<br>Clique dessus pour activer ton compte.';
-  document.getElementById('confirm-overlay').style.display = 'flex';
+  }).then(function(res) {
+    if (res.error) { showToast('❌ ' + res.error.message); return; }
+    lastRegEmail = e;
+    document.getElementById('confirm-msg').innerHTML =
+      'Un lien de confirmation a été envoyé à <strong>' + e + '</strong>.<br>Clique dessus pour activer ton compte.';
+    document.getElementById('confirm-overlay').style.display = 'flex';
+  }).catch(function() { showToast('❌ Erreur lors de l\'inscription'); });
 }
 
-async function resendConfirmEmail() {
+function resendConfirmEmail() {
   if (!lastRegEmail) { showToast('⚠️ Aucun email enregistré'); return; }
-  var { error } = await supabaseClient.auth.resend({ type: 'signup', email: lastRegEmail });
-  if (error) showToast('❌ ' + error.message);
-  else showToast('📧 Email renvoyé !');
+  supabaseClient.auth.resend({ type: 'signup', email: lastRegEmail }).then(function(res) {
+    if (res.error) showToast('❌ ' + res.error.message);
+    else showToast('📧 Email renvoyé !');
+  });
 }
 
-async function doLogout() {
-  await supabaseClient.auth.signOut();
-  currentUser = null;
-  showScreen('auth-screen', document.querySelectorAll('.nav-btn')[3]);
-  showToast('À bientôt !');
+function doLogout() {
+  supabaseClient.auth.signOut().then(function() {
+    currentUser = null;
+    showScreen('auth-screen', document.querySelectorAll('.nav-btn')[3]);
+    showToast('À bientôt !');
+  });
 }
 
-async function doForgotPassword() {
+function doForgotPassword() {
   var u = document.getElementById('login-user').value.trim();
   if (!u) { showToast('⚠️ Saisis ton email d\'abord'); return; }
-  var { error } = await supabaseClient.auth.resetPasswordForEmail(u, {
+  supabaseClient.auth.resetPasswordForEmail(u, {
     redirectTo: 'https://jerdewapp.github.io/pumpfinder'
+  }).then(function(res) {
+    if (res.error) showToast('❌ ' + res.error.message);
+    else showToast('📧 Lien envoyé sur ' + u);
   });
-  if (error) showToast('❌ ' + error.message);
-  else showToast('📧 Lien envoyé sur ' + u);
-}
-
-async function initAuth() {
-  var { data } = await supabaseClient.auth.getSession();
-  if (data.session) {
-    var user = data.session.user;
-    currentUser = {
-      username: user.user_metadata.username || user.email.split('@')[0],
-      email: user.email,
-      role: user.user_metadata.role || 'contrib',
-      contributions: 0,
-      avatar: (user.user_metadata.username || user.email)[0].toUpperCase()
-    };
-  } else {
-    currentUser = { username: 'Invité', role: 'guest', contributions: 0, avatar: '?' };
-  }
 }
 // ============ FIN SUPABASE AUTH ============
 
