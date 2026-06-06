@@ -1402,13 +1402,14 @@ function doLogout(){currentUser=null;showScreen("auth-screen",document.querySele
 function switchAuthTab(tab){var isL=tab==="login";document.getElementById("auth-login").style.display=isL?"block":"none";document.getElementById("auth-register").style.display=isL?"none":"block";document.getElementById("tab-login").className="auth-tab "+(isL?"active":"inactive");document.getElementById("tab-register").className="auth-tab "+(isL?"inactive":"active");}
 function togglePwd(id,btn){var el=document.getElementById(id);el.type=el.type==="password"?"text":"password";btn.textContent=el.type==="password"?"👁":"🙈";}
 
-window.addEventListener("load", async function(){
+window.addEventListener("load", function(){
   SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
-  await initAuth();
-  initMap(); applyLang(); loadCommunitySpots();
-  document.getElementById("filter-bar").style.display="flex";
-  showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
-  setTimeout(showInstallPopup, 2000);
+  initAuth().then(function(){
+    initMap(); applyLang(); loadCommunitySpots();
+    document.getElementById("filter-bar").style.display="flex";
+    showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
+    setTimeout(showInstallPopup, 2000);
+  });
 });
   if(!currentUser){showScreen("auth-screen",null);return;}
   var rBadge=currentUser.role==="admin"?"⚙️ Admin":currentUser.role==="guest"?"👀 "+t("auth_guest"):"🚴 Rider";
