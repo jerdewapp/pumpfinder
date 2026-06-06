@@ -130,7 +130,6 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 .detail-panel{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,0.12);padding:20px;z-index:1000;max-height:85vh;overflow-y:auto;}
 .detail-handle{width:36px;height:4px;background:#e8e8e8;border-radius:2px;margin:0 auto 18px;}
 .detail-header{display:flex;align-items:flex-start;gap:13px;margin-bottom:16px;}
-.detail-ico{width:56px;height:56px;border-radius:16px;object-fit:cover;flex-shrink:0;background:#f2f2f2;display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;}
 .detail-title h2{font-size:16px;font-weight:800;color:#111;line-height:1.3;}
 .detail-title p{font-size:11px;color:#aaa;margin-top:3px;font-weight:500;}
 .fav-btn{width:36px;height:36px;border:1.5px solid #e8e8e8;background:#fff;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;margin-left:auto;flex-shrink:0;}
@@ -259,7 +258,7 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
   <button onclick="resendConfirmEmail()" style="width:100%;max-width:340px;padding:12px;background:transparent;color:#888;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);">Renvoyer l'email</button>
 </div>
 
-<!-- POPUP INSTALLATION UNIVERSEL -->
+<!-- POPUP INSTALLATION -->
 <div id="install-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);">
   <div id="install-popup" style="background:#fff;width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:28px 24px 36px;box-shadow:0 -8px 40px rgba(0,0,0,0.3);">
     <div style="width:36px;height:4px;background:#e0e0e0;border-radius:2px;margin:0 auto 22px;"></div>
@@ -271,15 +270,9 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
       </div>
     </div>
     <div style="background:#f8f8f8;border-radius:14px;padding:14px 16px;margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-        <span style="font-size:18px;">⚡</span><span style="font-size:13px;font-weight:600;color:#333;">Lancement instantané</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-        <span style="font-size:18px;">📴</span><span style="font-size:13px;font-weight:600;color:#333;">Fonctionne hors connexion</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:18px;">🗺️</span><span style="font-size:13px;font-weight:600;color:#333;">1229 pumptracks de France</span>
-      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="font-size:18px;">⚡</span><span style="font-size:13px;font-weight:600;color:#333;">Lancement instantané</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="font-size:18px;">📴</span><span style="font-size:13px;font-weight:600;color:#333;">Fonctionne hors connexion</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🗺️</span><span style="font-size:13px;font-weight:600;color:#333;">1229 pumptracks de France</span></div>
     </div>
     <div id="install-instructions" style="background:rgba(224,0,15,0.05);border:1.5px solid rgba(224,0,15,0.15);border-radius:14px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#333;line-height:1.7;"></div>
     <button id="install-main-btn" onclick="doInstall()" style="width:100%;padding:15px;background:#e0000f;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-bottom:10px;">Installer l'application</button>
@@ -287,14 +280,11 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
   </div>
 </div>
 
-<!-- ============ HEADER ============ -->
+<!-- HEADER -->
 <div class="header">
   <div class="header-logo">
-    <!-- Logo PumpFinder -->
     <img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:38px;width:auto;display:block;" onerror="this.style.display='none'"/>
-    <!-- Croix -->
     <span style="font-size:13px;font-weight:700;color:#bbb;letter-spacing:.3px;margin:0 9px;flex-shrink:0;">×</span>
-    <!-- Logo ourouler -->
     <a href="https://www.ourouler.com" target="_blank" style="display:flex;align-items:center;line-height:0;">
       <img src="ourouler-logo.svg" style="height:29px;width:auto;display:block;" onerror="this.style.display='none'"/>
     </a>
@@ -525,7 +515,7 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
         <button id="tab-register" class="auth-tab inactive" onclick="switchAuthTab('register')">Inscription</button>
       </div>
       <div id="auth-login" class="auth-card">
-        <div class="field"><label>Pseudo ou email</label><input type="text" id="login-user" placeholder="PumpRider69"></div>
+        <div class="field"><label>Email</label><input type="email" id="login-user" placeholder="rider@example.com"></div>
         <div class="field"><label>Mot de passe</label>
           <div class="pwd-wrap"><input type="password" id="login-pass" placeholder="••••••••"><button class="pwd-eye" onclick="togglePwd('login-pass',this)">👁</button></div>
         </div>
@@ -556,33 +546,34 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 <script>
 var SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
 
-// ============ SUPABASE AUTH ============
-var supabaseClient = supabase.createClient(
+// ============ SUPABASE ============
+var supa = supabase.createClient(
   'https://bofoaaelxsjphjwbbtbc.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw'
 );
-
+var SUPA_URL = 'https://bofoaaelxsjphjwbbtbc.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw';
 var lastRegEmail = '';
 
 function setCurrentUser(user) {
   currentUser = {
-    username: user.user_metadata.username || user.email.split('@')[0],
+    username: (user.user_metadata && user.user_metadata.username) ? user.user_metadata.username : user.email.split('@')[0],
     email: user.email,
-    role: user.user_metadata.role || 'contrib',
+    role: (user.user_metadata && user.user_metadata.role) ? user.user_metadata.role : 'contrib',
     contributions: 0,
-    avatar: (user.user_metadata.username || user.email)[0].toUpperCase()
+    avatar: ((user.user_metadata && user.user_metadata.username) ? user.user_metadata.username : user.email)[0].toUpperCase()
   };
 }
 
 function initAuth() {
-  return supabaseClient.auth.getSession().then(function(res) {
-    if (res.data && res.data.session) {
+  return supa.auth.getSession().then(function(res) {
+    if (res.data && res.data.session && res.data.session.user) {
       setCurrentUser(res.data.session.user);
     } else {
-      currentUser = { username: 'Invité', role: 'guest', contributions: 0, avatar: '?' };
+      currentUser = {username:'Invité', role:'guest', contributions:0, avatar:'?'};
     }
   }).catch(function() {
-    currentUser = { username: 'Invité', role: 'guest', contributions: 0, avatar: '?' };
+    currentUser = {username:'Invité', role:'guest', contributions:0, avatar:'?'};
   });
 }
 
@@ -591,18 +582,18 @@ function doLogin() {
   var p = document.getElementById('login-pass').value;
   if (!u || !p) { showToast('⚠️ Champs requis'); return; }
   showToast('⏳ Connexion…');
-  supabaseClient.auth.signInWithPassword({ email: u, password: p }).then(function(res) {
+  supa.auth.signInWithPassword({email:u, password:p}).then(function(res) {
     if (res.error) {
-      var msg = res.error.message;
-      if (msg.includes('Email not confirmed')) showToast('📧 Confirme ton email d\'abord');
-      else if (msg.includes('Invalid login') || msg.includes('invalid_credentials')) showToast('❌ Email ou mot de passe incorrect');
-      else showToast('❌ ' + msg);
+      var m = res.error.message;
+      if (m.indexOf('Email not confirmed') !== -1) showToast('📧 Confirme ton email d\'abord');
+      else if (m.indexOf('Invalid') !== -1 || m.indexOf('invalid') !== -1) showToast('❌ Email ou mot de passe incorrect');
+      else showToast('❌ ' + m);
       return;
     }
     setCurrentUser(res.data.user);
     showToast('✅ Bienvenue ' + currentUser.username + ' !');
     showScreen('profile-screen', document.querySelectorAll('.nav-btn')[3]);
-  }).catch(function(e) { showToast('❌ Erreur de connexion'); });
+  }).catch(function() { showToast('❌ Erreur de connexion'); });
 }
 
 function doRegister() {
@@ -615,28 +606,24 @@ function doRegister() {
   if (p.length < 6) { showToast('❌ Mot de passe trop court (6 min)'); return; }
   if (!document.getElementById('reg-cgu').checked) { showToast('⚠️ Acceptez les CGU'); return; }
   showToast('⏳ Création du compte…');
-  supabaseClient.auth.signUp({
-    email: e, password: p,
-    options: { data: { username: u, role: 'contrib' } }
-  }).then(function(res) {
+  supa.auth.signUp({email:e, password:p, options:{data:{username:u, role:'contrib'}}}).then(function(res) {
     if (res.error) { showToast('❌ ' + res.error.message); return; }
     lastRegEmail = e;
-    document.getElementById('confirm-msg').innerHTML =
-      'Un lien de confirmation a été envoyé à <strong>' + e + '</strong>.<br>Clique dessus pour activer ton compte.';
+    document.getElementById('confirm-msg').innerHTML = 'Un lien de confirmation a été envoyé à <strong>' + e + '</strong>.<br>Clique dessus pour activer ton compte.';
     document.getElementById('confirm-overlay').style.display = 'flex';
   }).catch(function() { showToast('❌ Erreur lors de l\'inscription'); });
 }
 
 function resendConfirmEmail() {
   if (!lastRegEmail) { showToast('⚠️ Aucun email enregistré'); return; }
-  supabaseClient.auth.resend({ type: 'signup', email: lastRegEmail }).then(function(res) {
+  supa.auth.resend({type:'signup', email:lastRegEmail}).then(function(res) {
     if (res.error) showToast('❌ ' + res.error.message);
     else showToast('📧 Email renvoyé !');
   });
 }
 
 function doLogout() {
-  supabaseClient.auth.signOut().then(function() {
+  supa.auth.signOut().then(function() {
     currentUser = null;
     showScreen('auth-screen', document.querySelectorAll('.nav-btn')[3]);
     showToast('À bientôt !');
@@ -646,93 +633,15 @@ function doLogout() {
 function doForgotPassword() {
   var u = document.getElementById('login-user').value.trim();
   if (!u) { showToast('⚠️ Saisis ton email d\'abord'); return; }
-  supabaseClient.auth.resetPasswordForEmail(u, {
-    redirectTo: 'https://jerdewapp.github.io/pumpfinder'
-  }).then(function(res) {
+  supa.auth.resetPasswordForEmail(u, {redirectTo:'https://jerdewapp.github.io/pumpfinder'}).then(function(res) {
     if (res.error) showToast('❌ ' + res.error.message);
     else showToast('📧 Lien envoyé sur ' + u);
   });
 }
-// ============ FIN SUPABASE AUTH ============
-
-// ============ INSTALL POPUP ============
-var deferredPrompt = null;
-
-function detectBrowser() {
-  var ua = navigator.userAgent;
-  var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  var isSafari = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
-  var isFirefox = /Firefox|FxiOS/.test(ua);
-  var isChrome = (/Chrome|CriOS/.test(ua)) && !isFirefox;
-  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-  return {isIOS:isIOS, isSafari:isSafari, isFirefox:isFirefox, isChrome:isChrome, isStandalone:isStandalone};
-}
-
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-function showInstallPopup() {
-  var b = detectBrowser();
-  if (b.isStandalone) return;
-  if (localStorage.getItem('pf_install_dismissed')) return;
-  var instructions = document.getElementById('install-instructions');
-  var mainBtn = document.getElementById('install-main-btn');
-  if (b.isSafari) {
-    instructions.innerHTML = '<strong>Sur Safari iOS / iPadOS :</strong><br>Appuyez sur <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⬆️ Partager</span> dans la barre du navigateur, puis <strong>"Sur l\'écran d\'accueil"</strong> et confirmez avec <strong>"Ajouter"</strong>';
-    mainBtn.textContent = "J'ai compris !";
-    mainBtn.onclick = function(){ dismissInstall(); };
-  } else if (b.isFirefox) {
-    instructions.innerHTML = '<strong>Firefox ne supporte plus l\'installation de PWA.</strong><br>Pour installer PumpFinder, ouvrez cette page dans <strong>Chrome</strong> ou <strong>Samsung Internet</strong> et utilisez le menu d\'installation.';
-    mainBtn.textContent = 'Ouvrir dans Chrome';
-    mainBtn.onclick = function(){ window.open('https://jerdewapp.github.io/pumpfinder', '_blank'); dismissInstall(); };
-  } else if (deferredPrompt) {
-    instructions.innerHTML = '<strong>Installation en un clic</strong><br>Appuyez sur le bouton ci-dessous pour ajouter PumpFinder à votre écran d\'accueil.';
-    mainBtn.textContent = '📲 Installer maintenant';
-    mainBtn.onclick = function(){ doInstall(); };
-  } else {
-    instructions.innerHTML = '<strong>Sur Chrome Android :</strong><br>Appuyez sur le menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> en haut à droite → <strong>"Ajouter à l\'écran d\'accueil"</strong> → <strong>"Installer"</strong>';
-    mainBtn.textContent = "J'ai compris !";
-    mainBtn.onclick = function(){ dismissInstall(); };
-  }
-  var overlay = document.getElementById('install-overlay');
-  overlay.style.display = 'flex';
-  var popup = document.getElementById('install-popup');
-  popup.style.transform = 'translateY(100%)';
-  popup.style.transition = 'transform .35s ease';
-  setTimeout(function(){ popup.style.transform = 'translateY(0)'; }, 20);
-}
-
-function dismissInstall() {
-  localStorage.setItem('pf_install_dismissed', '1');
-  var popup = document.getElementById('install-popup');
-  popup.style.transform = 'translateY(100%)';
-  setTimeout(function(){ document.getElementById('install-overlay').style.display = 'none'; }, 350);
-}
-
-function doInstall() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(result) { deferredPrompt = null; dismissInstall(); });
-  } else { dismissInstall(); }
-}
-// ============ FIN INSTALL POPUP ============
-
-// ============ SUPABASE REST (spots + reports) ============
-var SUPA_URL = 'https://bofoaaelxsjphjwbbtbc.supabase.co';
-var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw';
 
 function supaFetch(path, options) {
-  var session = supabaseClient.auth.session ? supabaseClient.auth.session() : null;
-  var token = (session && session.access_token) ? session.access_token : SUPA_KEY;
   return fetch(SUPA_URL + '/rest/v1/' + path, Object.assign({
-    headers: {
-      'apikey': SUPA_KEY,
-      'Authorization': 'Bearer ' + token,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    }
+    headers: {'apikey':SUPA_KEY, 'Authorization':'Bearer '+SUPA_KEY, 'Content-Type':'application/json', 'Prefer':'return=representation'}
   }, options));
 }
 
@@ -743,227 +652,79 @@ function getDeviceId() {
 }
 
 function loadCommunitySpots() {
-  supaFetch('spots_community?select=*&order=created_at.desc')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(!Array.isArray(data)) return;
-      data.forEach(function(s){
-        var spot = {
-          id: 'c_' + s.id, name: s.name, city: s.city||'', lat: s.lat, lng: s.lng,
-          diff: s.diff||'inter', surface: s.surface||'asphalt', builder: s.builder||'inconnu',
-          lit: !!s.lit, free: !!s.free, kids: !!s.kids, desc: s.description||'', equip: s.equip||{},
-          status: s.status||'ok', status_msg: s.status_msg||'Ajouté par la communauté',
-          confirmations: s.confirmations||0, source: 'manual', photo: ''
-        };
-        if(!SPOTS.find(function(x){return x.id===spot.id;})) SPOTS.push(spot);
-      });
-      renderMarkers(); renderList();
-    })
-    .catch(function(e){ console.warn('Supabase load error:', e); });
+  supaFetch('spots_community?select=*&order=created_at.desc').then(function(r) { return r.json(); }).then(function(data) {
+    if (!Array.isArray(data)) return;
+    data.forEach(function(s) {
+      var spot = {id:'c_'+s.id, name:s.name, city:s.city||'', lat:s.lat, lng:s.lng, diff:s.diff||'inter', surface:s.surface||'asphalt', builder:s.builder||'inconnu', lit:!!s.lit, free:!!s.free, kids:!!s.kids, desc:s.description||'', equip:s.equip||{}, status:s.status||'ok', status_msg:s.status_msg||'Ajouté par la communauté', confirmations:s.confirmations||0, source:'manual', photo:''};
+      if (!SPOTS.find(function(x) { return x.id === spot.id; })) SPOTS.push(spot);
+    });
+    renderMarkers(); renderList();
+  }).catch(function(e) { console.warn('Supabase load error:', e); });
 }
 
 function saveSpotToSupabase(spot) {
-  return supaFetch('spots_community', {
-    method: 'POST',
-    body: JSON.stringify({
-      name: spot.name, city: spot.city, lat: spot.lat, lng: spot.lng,
-      diff: spot.diff, surface: spot.surface, builder: spot.builder,
-      lit: spot.lit, free: spot.free, kids: spot.kids,
-      description: spot.desc, equip: spot.equip,
-      status: 'ok', status_msg: 'Ajouté par la communauté', device_id: getDeviceId()
-    })
-  });
+  return supaFetch('spots_community', {method:'POST', body:JSON.stringify({name:spot.name, city:spot.city, lat:spot.lat, lng:spot.lng, diff:spot.diff, surface:spot.surface, builder:spot.builder, lit:spot.lit, free:spot.free, kids:spot.kids, description:spot.desc, equip:spot.equip, status:'ok', status_msg:'Ajouté par la communauté', device_id:getDeviceId()})});
 }
 
 function saveReportToSupabase(spotId, source, status) {
-  return supaFetch('reports', {
-    method: 'POST',
-    body: JSON.stringify({ spot_id: String(spotId), spot_source: source||'ourouler', status: status, device_id: getDeviceId() })
-  });
+  return supaFetch('reports', {method:'POST', body:JSON.stringify({spot_id:String(spotId), spot_source:source||'ourouler', status:status, device_id:getDeviceId()})});
 }
-// ============ FIN SUPABASE REST ============
+// ============ FIN SUPABASE ============
+
+// ============ INSTALL POPUP ============
+var deferredPrompt = null;
+function detectBrowser() {
+  var ua = navigator.userAgent;
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isSafari = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
+  var isFirefox = /Firefox|FxiOS/.test(ua);
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  return {isIOS:isIOS, isSafari:isSafari, isFirefox:isFirefox, isStandalone:isStandalone};
+}
+window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); deferredPrompt = e; });
+function showInstallPopup() {
+  var b = detectBrowser();
+  if (b.isStandalone) return;
+  if (localStorage.getItem('pf_install_dismissed')) return;
+  var instructions = document.getElementById('install-instructions');
+  var mainBtn = document.getElementById('install-main-btn');
+  if (b.isSafari) {
+    instructions.innerHTML = '<strong>Sur Safari iOS / iPadOS :</strong><br>Appuyez sur <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⬆️ Partager</span> puis <strong>"Sur l\'écran d\'accueil"</strong>';
+    mainBtn.textContent = "J'ai compris !"; mainBtn.onclick = function() { dismissInstall(); };
+  } else if (b.isFirefox) {
+    instructions.innerHTML = '<strong>Firefox ne supporte plus les PWA.</strong><br>Ouvrez cette page dans <strong>Chrome</strong> pour installer.';
+    mainBtn.textContent = 'Ouvrir dans Chrome'; mainBtn.onclick = function() { window.open('https://jerdewapp.github.io/pumpfinder','_blank'); dismissInstall(); };
+  } else if (deferredPrompt) {
+    instructions.innerHTML = '<strong>Installation en un clic</strong><br>Appuyez sur le bouton ci-dessous.';
+    mainBtn.textContent = '📲 Installer maintenant'; mainBtn.onclick = function() { doInstall(); };
+  } else {
+    instructions.innerHTML = '<strong>Sur Chrome Android :</strong><br>Menu <span style="background:#e0000f;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700">⋮</span> → <strong>"Ajouter à l\'écran d\'accueil"</strong>';
+    mainBtn.textContent = "J'ai compris !"; mainBtn.onclick = function() { dismissInstall(); };
+  }
+  var overlay = document.getElementById('install-overlay');
+  overlay.style.display = 'flex';
+  var popup = document.getElementById('install-popup');
+  popup.style.transform = 'translateY(100%)'; popup.style.transition = 'transform .35s ease';
+  setTimeout(function() { popup.style.transform = 'translateY(0)'; }, 20);
+}
+function dismissInstall() {
+  localStorage.setItem('pf_install_dismissed','1');
+  var popup = document.getElementById('install-popup');
+  popup.style.transform = 'translateY(100%)';
+  setTimeout(function() { document.getElementById('install-overlay').style.display = 'none'; }, 350);
+}
+function doInstall() {
+  if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(function() { deferredPrompt = null; dismissInstall(); }); }
+  else { dismissInstall(); }
+}
+// ============ FIN INSTALL POPUP ============
 
 var LANG = {
-  fr: {
-    nav_map:"Carte", nav_list:"Liste", nav_add:"Ajouter", nav_profile:"Profil",
-    filter_all:"Tous", filter_kids:"Kid Zone", filter_playground:"Aire de jeux", filter_skatepark:"Skatepark",
-    filter_dirt:"Terre", filter_lit:"Éclairé", filter_free:"Accès libre",
-    search_placeholder:"Rechercher une ville…",
-    nearest_tag:"⚡ Pumptrack le plus proche",
-    install_msg:"Installer PumpFinder sur votre écran d'accueil", install_btn:"Installer",
-    detail_chars:"📋 Caractéristiques", detail_equip:"⚙️ Équipements à proximité",
-    detail_desc:"💬 Description", detail_status:"📊 État", detail_report:"🚩 Signaler",
-    detail_osm_lbl:"📡 OSM + communauté", detail_no_equip:"Aucun renseigné",
-    detail_from_pos:"de votre position", detail_nearest:"⚡ Le plus proche",
-    detail_ourouler:"Voir la fiche ourouler.com",
-    detail_route:"🗺️ Itinéraire", detail_close:"✕",
-    report_ok:"✅ Tout ok", report_warn:"⚠️ Problème", report_hs:"🔴 Fermé",
-    chip_lit:"💡 Éclairé", chip_free:"🆓 Accès libre", chip_kids:"👶 Kids OK", chip_playground:"🛝 Aire de jeux",
-    sorted_dist:"📍 Triés par distance",
-    add_title_loc:"📍 Localisation", add_gps_btn:"Utiliser ma position GPS",
-    add_name:"Nom du spot", add_name_ph:"Ex: Pumptrack de Valmorel",
-    add_city:"Ville / Commune", add_city_ph:"Ex: Valmorel, Savoie",
-    add_lat:"Latitude", add_lng:"Longitude",
-    add_title_diff:"🎯 Difficulté", add_title_surf:"🛣️ Surface", add_title_builder:"🏗️ Constructeur",
-    add_title_equip:"⚙️ Équipements", add_title_desc:"💬 Description",
-    add_desc_ph:"Ambiance, accès, particularités…",
-    add_optional:"optionnel", add_community:"Visible immédiatement · Validé par la communauté (3 ✅)",
-    add_next:"Suivant →", add_back:"← Retour", add_submit:"✅ Soumettre",
-    add_step1:"Où ?", add_step2:"Quoi ?", add_step3:"Détails",
-    diff_beg:"Débutant", diff_inter:"Inter.", diff_exp:"Expert",
-    surf_asphalt:"Asphalte", surf_dirt:"Terre", surf_concrete:"Béton",
-    builder_bs:"BikeSolutions", builder_vs:"Velosolutions", builder_commune:"Commune",
-    builder_asso:"Associatif", builder_inconnu:"Inconnu", builder_other:"Autre",
-    equip_light:"💡 Éclairage", equip_free:"🆓 Accès libre", equip_toilets:"🚻 Toilettes",
-    equip_fountain:"⛲ Fontaine", equip_picnic:"🍽️ Picnic", equip_skate:"🛹 Skatepark",
-    equip_playground:"🛝 Aire de jeux", equip_parking:"🅿️ Parking", equip_kids:"👶 Kids zone",
-    profile_spots:"Spots ajoutés", profile_favs:"Favoris", profile_total:"Spots France",
-    profile_myfavs:"Mes favoris", profile_myspots:"Mes spots ajoutés",
-    profile_lang:"Langue : Français", profile_settings:"Paramètres", profile_logout:"Se déconnecter",
-    auth_login:"Connexion", auth_register:"Inscription",
-    auth_user:"Pseudo ou email", auth_pass:"Mot de passe", auth_forgot:"Mot de passe oublié ?",
-    auth_signin:"Se connecter", auth_guest:"Continuer sans compte",
-    auth_pseudo:"Pseudo", auth_email:"Email", auth_confirm:"Confirmer",
-    auth_cgu:"J'accepte les conditions d'utilisation", auth_create:"Créer mon compte",
-    auth_tagline:"Trouve tous les pumptracks de France", radius_label:"📡 Rayon",
-    builder_desc_bs:"Spécialiste français du pumptrack asphaltique",
-    builder_desc_vs:"Leader mondial du pumptrack asphaltique",
-    builder_desc_commune:"Réalisation municipale",
-    builder_desc_asso:"Construit par une association locale",
-    builder_desc_inconnu:"Constructeur non renseigné",
-    no_spot:"Aucun spot trouvé", or:"ou",
-  },
-  en: {
-    nav_map:"Map", nav_list:"List", nav_add:"Add", nav_profile:"Profile",
-    filter_all:"All", filter_kids:"Kid Zone", filter_playground:"Playground", filter_skatepark:"Skatepark",
-    filter_dirt:"Dirt", filter_lit:"Lit", filter_free:"Free access",
-    search_placeholder:"Search a city…",
-    nearest_tag:"⚡ Nearest pumptrack",
-    install_msg:"Install PumpFinder on your home screen", install_btn:"Install",
-    detail_chars:"📋 Features", detail_equip:"⚙️ Nearby amenities",
-    detail_desc:"💬 Description", detail_status:"📊 Status", detail_report:"🚩 Report",
-    detail_osm_lbl:"📡 OSM + community", detail_no_equip:"None listed",
-    detail_from_pos:"from your location", detail_nearest:"⚡ Nearest",
-    detail_ourouler:"View on ourouler.com",
-    detail_route:"🗺️ Directions", detail_close:"✕",
-    report_ok:"✅ All good", report_warn:"⚠️ Issue", report_hs:"🔴 Closed",
-    chip_lit:"💡 Lit", chip_free:"🆓 Free access", chip_kids:"👶 Kids OK", chip_playground:"🛝 Playground",
-    sorted_dist:"📍 Sorted by distance",
-    add_title_loc:"📍 Location", add_gps_btn:"Use my GPS position",
-    add_name:"Spot name", add_name_ph:"E.g. Valmorel Pumptrack",
-    add_city:"City / Town", add_city_ph:"E.g. Valmorel, Savoie",
-    add_lat:"Latitude", add_lng:"Longitude",
-    add_title_diff:"🎯 Difficulty", add_title_surf:"🛣️ Surface", add_title_builder:"🏗️ Builder",
-    add_title_equip:"⚙️ Amenities", add_title_desc:"💬 Description",
-    add_desc_ph:"Atmosphere, access, features…",
-    add_optional:"optional", add_community:"Visible immediately · Community validated (3 ✅)",
-    add_next:"Next →", add_back:"← Back", add_submit:"✅ Submit",
-    add_step1:"Where?", add_step2:"What?", add_step3:"Details",
-    diff_beg:"Beginner", diff_inter:"Inter.", diff_exp:"Expert",
-    surf_asphalt:"Asphalt", surf_dirt:"Dirt", surf_concrete:"Concrete",
-    builder_bs:"BikeSolutions", builder_vs:"Velosolutions", builder_commune:"Municipality",
-    builder_asso:"Association", builder_inconnu:"Unknown", builder_other:"Other",
-    equip_light:"💡 Lighting", equip_free:"🆓 Free access", equip_toilets:"🚻 Toilets",
-    equip_fountain:"⛲ Fountain", equip_picnic:"🍽️ Picnic", equip_skate:"🛹 Skatepark",
-    equip_playground:"🛝 Playground", equip_parking:"🅿️ Parking", equip_kids:"👶 Kids zone",
-    profile_spots:"Spots added", profile_favs:"Favourites", profile_total:"Spots in France",
-    profile_myfavs:"My favourites", profile_myspots:"My added spots",
-    profile_lang:"Language: English", profile_settings:"Settings", profile_logout:"Log out",
-    auth_login:"Login", auth_register:"Sign up",
-    auth_user:"Username or email", auth_pass:"Password", auth_forgot:"Forgot password?",
-    auth_signin:"Sign in", auth_guest:"Continue without account",
-    auth_pseudo:"Username", auth_email:"Email", auth_confirm:"Confirm",
-    auth_cgu:"I accept the terms of use", auth_create:"Create account",
-    auth_tagline:"Find all pumptracks in France", radius_label:"📡 Radius",
-    builder_desc_bs:"French asphalt pumptrack specialist",
-    builder_desc_vs:"World leader in asphalt pumptracks",
-    builder_desc_commune:"Municipal build",
-    builder_desc_asso:"Built by a local association",
-    builder_desc_inconnu:"Builder unknown",
-    no_spot:"No spots found", or:"or",
-  }
+  fr:{nav_map:"Carte",nav_list:"Liste",nav_add:"Ajouter",nav_profile:"Profil",filter_all:"Tous",filter_kids:"Kid Zone",filter_playground:"Aire de jeux",filter_skatepark:"Skatepark",filter_dirt:"Terre",filter_lit:"Éclairé",filter_free:"Accès libre",search_placeholder:"Rechercher une ville…",nearest_tag:"⚡ Pumptrack le plus proche",detail_chars:"📋 Caractéristiques",detail_equip:"⚙️ Équipements à proximité",detail_desc:"💬 Description",detail_status:"📊 État",detail_report:"🚩 Signaler",detail_osm_lbl:"📡 OSM + communauté",detail_no_equip:"Aucun renseigné",detail_from_pos:"de votre position",detail_nearest:"⚡ Le plus proche",detail_ourouler:"Voir la fiche ourouler.com",detail_route:"🗺️ Itinéraire",detail_close:"✕",report_ok:"✅ Tout ok",report_warn:"⚠️ Problème",report_hs:"🔴 Fermé",chip_lit:"💡 Éclairé",chip_free:"🆓 Accès libre",chip_kids:"👶 Kids OK",chip_playground:"🛝 Aire de jeux",sorted_dist:"📍 Triés par distance",add_title_loc:"📍 Localisation",add_gps_btn:"Utiliser ma position GPS",add_name:"Nom du spot",add_name_ph:"Ex: Pumptrack de Valmorel",add_city:"Ville / Commune",add_city_ph:"Ex: Valmorel, Savoie",add_lat:"Latitude",add_lng:"Longitude",add_title_diff:"🎯 Difficulté",add_title_surf:"🛣️ Surface",add_title_builder:"🏗️ Constructeur",add_title_equip:"⚙️ Équipements",add_title_desc:"💬 Description",add_desc_ph:"Ambiance, accès, particularités…",add_optional:"optionnel",add_community:"Visible immédiatement · Validé par la communauté (3 ✅)",add_next:"Suivant →",add_back:"← Retour",add_submit:"✅ Soumettre",add_step1:"Où ?",add_step2:"Quoi ?",add_step3:"Détails",diff_beg:"Débutant",diff_inter:"Inter.",diff_exp:"Expert",surf_asphalt:"Asphalte",surf_dirt:"Terre",surf_concrete:"Béton",builder_bs:"BikeSolutions",builder_vs:"Velosolutions",builder_commune:"Commune",builder_asso:"Associatif",builder_inconnu:"Inconnu",builder_other:"Autre",equip_light:"💡 Éclairage",equip_free:"🆓 Accès libre",equip_toilets:"🚻 Toilettes",equip_fountain:"⛲ Fontaine",equip_picnic:"🍽️ Picnic",equip_skate:"🛹 Skatepark",equip_playground:"🛝 Aire de jeux",equip_parking:"🅿️ Parking",equip_kids:"👶 Kids zone",profile_spots:"Spots ajoutés",profile_favs:"Favoris",profile_total:"Spots France",profile_myfavs:"Mes favoris",profile_myspots:"Mes spots ajoutés",profile_lang:"Langue : Français",profile_settings:"Paramètres",profile_logout:"Se déconnecter",auth_login:"Connexion",auth_register:"Inscription",auth_user:"Email",auth_pass:"Mot de passe",auth_forgot:"Mot de passe oublié ?",auth_signin:"Se connecter",auth_guest:"Continuer sans compte",auth_pseudo:"Pseudo",auth_email:"Email",auth_confirm:"Confirmer",auth_cgu:"J'accepte les conditions d'utilisation",auth_create:"Créer mon compte",auth_tagline:"Trouve tous les pumptracks de France",radius_label:"📡 Rayon",builder_desc_bs:"Spécialiste français du pumptrack asphaltique",builder_desc_vs:"Leader mondial du pumptrack asphaltique",builder_desc_commune:"Réalisation municipale",builder_desc_asso:"Construit par une association locale",builder_desc_inconnu:"Constructeur non renseigné",no_spot:"Aucun spot trouvé",or:"ou"},
+  en:{nav_map:"Map",nav_list:"List",nav_add:"Add",nav_profile:"Profile",filter_all:"All",filter_kids:"Kid Zone",filter_playground:"Playground",filter_skatepark:"Skatepark",filter_dirt:"Dirt",filter_lit:"Lit",filter_free:"Free access",search_placeholder:"Search a city…",nearest_tag:"⚡ Nearest pumptrack",detail_chars:"📋 Features",detail_equip:"⚙️ Nearby amenities",detail_desc:"💬 Description",detail_status:"📊 Status",detail_report:"🚩 Report",detail_osm_lbl:"📡 OSM + community",detail_no_equip:"None listed",detail_from_pos:"from your location",detail_nearest:"⚡ Nearest",detail_ourouler:"View on ourouler.com",detail_route:"🗺️ Directions",detail_close:"✕",report_ok:"✅ All good",report_warn:"⚠️ Issue",report_hs:"🔴 Closed",chip_lit:"💡 Lit",chip_free:"🆓 Free access",chip_kids:"👶 Kids OK",chip_playground:"🛝 Playground",sorted_dist:"📍 Sorted by distance",add_title_loc:"📍 Location",add_gps_btn:"Use my GPS position",add_name:"Spot name",add_name_ph:"E.g. Valmorel Pumptrack",add_city:"City / Town",add_city_ph:"E.g. Valmorel, Savoie",add_lat:"Latitude",add_lng:"Longitude",add_title_diff:"🎯 Difficulty",add_title_surf:"🛣️ Surface",add_title_builder:"🏗️ Builder",add_title_equip:"⚙️ Amenities",add_title_desc:"💬 Description",add_desc_ph:"Atmosphere, access, features…",add_optional:"optional",add_community:"Visible immediately · Community validated (3 ✅)",add_next:"Next →",add_back:"← Back",add_submit:"✅ Submit",add_step1:"Where?",add_step2:"What?",add_step3:"Details",diff_beg:"Beginner",diff_inter:"Inter.",diff_exp:"Expert",surf_asphalt:"Asphalt",surf_dirt:"Dirt",surf_concrete:"Concrete",builder_bs:"BikeSolutions",builder_vs:"Velosolutions",builder_commune:"Municipality",builder_asso:"Association",builder_inconnu:"Unknown",builder_other:"Other",equip_light:"💡 Lighting",equip_free:"🆓 Free access",equip_toilets:"🚻 Toilets",equip_fountain:"⛲ Fountain",equip_picnic:"🍽️ Picnic",equip_skate:"🛹 Skatepark",equip_playground:"🛝 Playground",equip_parking:"🅿️ Parking",equip_kids:"👶 Kids zone",profile_spots:"Spots added",profile_favs:"Favourites",profile_total:"Spots in France",profile_myfavs:"My favourites",profile_myspots:"My added spots",profile_lang:"Language: English",profile_settings:"Settings",profile_logout:"Log out",auth_login:"Login",auth_register:"Sign up",auth_user:"Email",auth_pass:"Password",auth_forgot:"Forgot password?",auth_signin:"Sign in",auth_guest:"Continue without account",auth_pseudo:"Username",auth_email:"Email",auth_confirm:"Confirm",auth_cgu:"I accept the terms of use",auth_create:"Create account",auth_tagline:"Find all pumptracks in France",radius_label:"📡 Radius",builder_desc_bs:"French asphalt pumptrack specialist",builder_desc_vs:"World leader in asphalt pumptracks",builder_desc_commune:"Municipal build",builder_desc_asso:"Built by a local association",builder_desc_inconnu:"Builder unknown",no_spot:"No spots found",or:"or"}
 };
 
-function t(k){ return (LANG[lang]&&LANG[lang][k]) ? LANG[lang][k] : (LANG.fr[k]||k); }
-
-function applyLang() {
-  document.querySelectorAll(".nav-lbl")[0].textContent=t("nav_map");
-  document.querySelectorAll(".nav-lbl")[1].textContent=t("nav_list");
-  document.querySelectorAll(".nav-lbl")[2].textContent=t("nav_add");
-  document.querySelectorAll(".nav-lbl")[3].textContent=t("nav_profile");
-  document.querySelector(".chip[data-f='all'] .chip-lbl").textContent=t("filter_all");
-  document.querySelector(".chip[data-f='kids'] .chip-lbl").textContent=t("filter_kids");
-  document.querySelector(".chip[data-f='playground'] .chip-lbl").textContent=t("filter_playground");
-  document.querySelector(".chip[data-f='skatepark'] .chip-lbl").textContent=t("filter_skatepark");
-  function setPillText(sel, txt) {
-    var el=document.querySelector(sel); if(!el) return;
-    var nodes=Array.from(el.childNodes).filter(function(n){return n.nodeType===3;});
-    if(nodes.length) nodes[nodes.length-1].textContent=" "+txt;
-  }
-  setPillText(".chip-pill[data-f='dirt']", t("filter_dirt"));
-  setPillText(".chip-pill[data-f='lit']",  t("filter_lit"));
-  setPillText(".chip-pill[data-f='free']", t("filter_free"));
-  document.getElementById("search-input").placeholder=t("search_placeholder");
-  document.querySelector(".nb-tag").textContent=t("nearest_tag");
-  document.querySelector(".radius-bar label").textContent=t("radius_label");
-  document.querySelectorAll(".step-lbl")[0].textContent=t("add_step1");
-  document.querySelectorAll(".step-lbl")[1].textContent=t("add_step2");
-  document.querySelectorAll(".step-lbl")[2].textContent=t("add_step3");
-  var sc1=document.getElementById("step-content-1");
-  if(sc1){
-    sc1.querySelector(".step-card-title").textContent=t("add_title_loc");
-    sc1.querySelector(".gps-big").innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/><circle cx="12" cy="12" r="7"/></svg> '+t("add_gps_btn");
-    var labels=sc1.querySelectorAll(".field label");
-    labels[0].textContent=t("add_name"); sc1.querySelector("#add-name").placeholder=t("add_name_ph");
-    labels[1].textContent=t("add_city"); sc1.querySelector("#add-city").placeholder=t("add_city_ph");
-    labels[2].textContent=t("add_lat"); labels[3].textContent=t("add_lng");
-  }
-  var sc2=document.getElementById("step-content-2");
-  if(sc2){
-    sc2.querySelectorAll(".step-card-title")[0].textContent=t("add_title_diff");
-    sc2.querySelectorAll(".step-card-title")[1].textContent=t("add_title_surf");
-    sc2.querySelectorAll(".step-card-title")[2].textContent=t("add_title_builder");
-    var dts=sc2.querySelectorAll(".diff-tile");
-    dts[0].lastChild.textContent=t("diff_beg"); dts[1].lastChild.textContent=t("diff_inter"); dts[2].lastChild.textContent=t("diff_exp");
-    var sts=sc2.querySelectorAll(".surface-tile");
-    sts[0].lastChild.textContent=t("surf_asphalt"); sts[1].lastChild.textContent=t("surf_dirt"); sts[2].lastChild.textContent=t("surf_concrete");
-    var bts=sc2.querySelectorAll(".builder-tile");
-    bts[0].lastChild.textContent=t("builder_bs"); bts[1].lastChild.textContent=t("builder_vs");
-    bts[2].lastChild.textContent=t("builder_commune"); bts[3].lastChild.textContent=t("builder_asso");
-    bts[4].lastChild.textContent=t("builder_inconnu"); bts[5].lastChild.textContent=t("builder_other");
-  }
-  var sc3=document.getElementById("step-content-3");
-  if(sc3){
-    sc3.querySelectorAll(".step-card-title")[0].innerHTML=t("add_title_equip")+' <span class="optional-lbl">'+t("add_optional")+'</span>';
-    sc3.querySelectorAll(".step-card-title")[1].innerHTML=t("add_title_desc")+' <span class="optional-lbl">'+t("add_optional")+'</span>';
-    sc3.querySelector("textarea").placeholder=t("add_desc_ph");
-    var ets=sc3.querySelectorAll(".equip-tile");
-    ets[0].textContent=t("equip_light"); ets[1].textContent=t("equip_free"); ets[2].textContent=t("equip_toilets");
-    ets[3].textContent=t("equip_fountain"); ets[4].textContent=t("equip_picnic"); ets[5].textContent=t("equip_skate");
-    ets[6].textContent=t("equip_playground"); ets[7].textContent=t("equip_parking"); ets[8].textContent=t("equip_kids");
-    sc3.querySelector("div[style]").textContent=t("add_community");
-  }
-  document.getElementById("step-back-btn").textContent=t("add_back");
-  var nxt=document.getElementById("step-next-btn");
-  if(nxt) nxt.textContent=currentStep===3?t("add_submit"):t("add_next");
-  document.getElementById("tab-login").textContent=t("auth_login");
-  document.getElementById("tab-register").textContent=t("auth_register");
-  document.querySelector("#auth-login .field:nth-child(1) label").textContent=t("auth_user");
-  document.querySelector("#auth-login .field:nth-child(2) label").textContent=t("auth_pass");
-  document.querySelector("#auth-login .forgot a").textContent=t("auth_forgot");
-  document.querySelector("#auth-login .btn-full").textContent=t("auth_signin");
-  document.querySelector("#auth-login .btn-ghost").textContent=t("auth_guest");
-  document.querySelector("#auth-register .field:nth-child(1) label").textContent=t("auth_pseudo");
-  document.querySelector("#auth-register .field:nth-child(2) label").textContent=t("auth_email");
-  document.querySelector("#auth-register .field:nth-child(3) label").textContent=t("auth_pass");
-  document.querySelector("#auth-register .field:nth-child(4) label").textContent=t("auth_confirm");
-  document.querySelector("#auth-register .cgu-row label").textContent=t("auth_cgu");
-  document.querySelector("#auth-register .btn-full").textContent=t("auth_create");
-  document.querySelector(".auth-bg div div").textContent=t("auth_tagline");
-  BUILDERS.bs.desc=t("builder_desc_bs"); BUILDERS.vs.desc=t("builder_desc_vs");
-  BUILDERS.commune.desc=t("builder_desc_commune"); BUILDERS.asso.desc=t("builder_desc_asso");
-  BUILDERS.inconnu.desc=t("builder_desc_inconnu");
-}
+function t(k) { return (LANG[lang]&&LANG[lang][k]) ? LANG[lang][k] : (LANG.fr[k]||k); }
 
 var BUILDERS = {
   bs:{label:"BikeSolutions",icon:"🟠",cls:"bs",desc:"Spécialiste français du pumptrack asphaltique",color:"#e65100"},
@@ -1007,24 +768,15 @@ function makeMarker(s, isNearest) {
   var sz=isNearest?56:40;
   var sc=s.status==="hs"?"#d32f2f":s.status==="warn"?"#f57c00":"#E10600";
   var ring=isNearest?'<circle cx="256" cy="256" r="260" fill="none" stroke="#E10600" stroke-width="12" opacity="0.3"/>':'';
-  var badge=s.status==="warn"?'<circle cx="420" cy="80" r="55" fill="#f57c00" stroke="white" stroke-width="14"/>':
-            s.status==="hs"?'<circle cx="420" cy="80" r="55" fill="#d32f2f" stroke="white" stroke-width="14"/>':'';
-  var svg='<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">'
-    +ring+'<circle cx="256" cy="256" r="240" fill="#000000" stroke="'+sc+'" stroke-width="18"/>'
-    +'<g fill="none" stroke="#FFFFFF" stroke-linecap="round">'
-    +'<path d="M180 130 Q256 70 332 130" stroke-width="18"/>'
-    +'<path d="M205 165 Q256 125 307 165" stroke-width="16"/>'
-    +'<circle cx="256" cy="195" r="12" fill="#FFFFFF" stroke="none"/>'
-    +'</g>'
-    +'<path d="M110 315 C155 255,215 255,255 305 C290 350,345 350,402 285" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>'
-    +badge+'</svg>';
-  return L.divIcon({html:svg,className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+  var badge=s.status==="warn"?'<circle cx="420" cy="80" r="55" fill="#f57c00" stroke="white" stroke-width="14"/>':s.status==="hs"?'<circle cx="420" cy="80" r="55" fill="#d32f2f" stroke="white" stroke-width="14"/>':'';
+  var svg='<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">'+ring+'<circle cx="256" cy="256" r="240" fill="#000000" stroke="'+sc+'" stroke-width="18"/><g fill="none" stroke="#FFFFFF" stroke-linecap="round"><path d="M180 130 Q256 70 332 130" stroke-width="18"/><path d="M205 165 Q256 125 307 165" stroke-width="16"/><circle cx="256" cy="195" r="12" fill="#FFFFFF" stroke="none"/></g><path d="M110 315 C155 255,215 255,255 305 C290 350,345 350,402 285" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>'+badge+'</svg>';
+  return L.divIcon({html:svg, className:'', iconSize:[sz,sz], iconAnchor:[sz/2,sz/2]});
 }
 
 function initMap() {
-  map=L.map("map",{zoomControl:true}).setView([46.5,2.5],6);
+  map = L.map("map",{zoomControl:true}).setView([46.5,2.5],6);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'© <a href="https://www.openstreetmap.org">OSM</a>',maxZoom:18}).addTo(map);
-  clusterGroup=L.markerClusterGroup({maxClusterRadius:60,showCoverageOnHover:false,spiderfyOnMaxZoom:true,disableClusteringAtZoom:14});
+  clusterGroup = L.markerClusterGroup({maxClusterRadius:60,showCoverageOnHover:false,spiderfyOnMaxZoom:true,disableClusteringAtZoom:14});
   map.addLayer(clusterGroup);
   renderMarkers();
 }
@@ -1032,41 +784,37 @@ function initMap() {
 function renderMarkers() {
   clusterGroup.clearLayers(); markers=[];
   SPOTS.filter(filterMatch).forEach(function(s) {
-    var isN=userPos&&s.id===nearestId;
-    var m=L.marker([s.lat,s.lng],{icon:makeMarker(s,isN),zIndexOffset:isN?1000:0});
+    var isN = userPos && s.id===nearestId;
+    var m = L.marker([s.lat,s.lng],{icon:makeMarker(s,isN),zIndexOffset:isN?1000:0});
     m.on("click",function(){showDetail(s.id);});
     clusterGroup.addLayer(m); markers.push(m);
   });
 }
 
 function locateMe() {
-  if(!navigator.geolocation){showToast("❌ GPS non disponible sur cet appareil");return;}
-  var fab=document.getElementById("gps-fab-btn");
+  if (!navigator.geolocation) { showToast("❌ GPS non disponible"); return; }
+  var fab = document.getElementById("gps-fab-btn");
   fab.classList.add("locating");
-  navigator.geolocation.getCurrentPosition(
-    function(position){
-      userPos={lat:position.coords.latitude,lng:position.coords.longitude};
-      fab.classList.remove("locating");
-      placeUserMarker(); computeNearest();
-      map.setView([userPos.lat,userPos.lng],13);
-      renderMarkers(); updateNearestBanner(); renderList();
-      document.getElementById("radius-bar").style.display="flex";
-      showToast("📍 Position trouvée !");
-    },
-    function(error){
-      fab.classList.remove("locating");
-      if(error.code===1) showToast("❌ Permission GPS refusée");
-      else if(error.code===2) showToast("❌ Position indisponible");
-      else showToast("❌ Délai GPS dépassé, réessayez");
-    },
-    {enableHighAccuracy:true, timeout:12000, maximumAge:60000}
-  );
+  navigator.geolocation.getCurrentPosition(function(position) {
+    userPos = {lat:position.coords.latitude, lng:position.coords.longitude};
+    fab.classList.remove("locating");
+    placeUserMarker(); computeNearest();
+    map.setView([userPos.lat,userPos.lng],13);
+    renderMarkers(); updateNearestBanner(); renderList();
+    document.getElementById("radius-bar").style.display="flex";
+    showToast("📍 Position trouvée !");
+  }, function(error) {
+    fab.classList.remove("locating");
+    if (error.code===1) showToast("❌ Permission GPS refusée");
+    else if (error.code===2) showToast("❌ Position indisponible");
+    else showToast("❌ Délai GPS dépassé");
+  }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
 }
 
 function placeUserMarker() {
-  if(userMarker) userMarker.remove();
-  var html='<div class="user-dot-outer"><div class="user-dot-inner"></div></div>';
-  userMarker=L.marker([userPos.lat,userPos.lng],{icon:L.divIcon({html:html,className:'',iconSize:[18,18],iconAnchor:[9,9]}),zIndexOffset:2000,interactive:false}).addTo(map);
+  if (userMarker) userMarker.remove();
+  var html = '<div class="user-dot-outer"><div class="user-dot-inner"></div></div>';
+  userMarker = L.marker([userPos.lat,userPos.lng],{icon:L.divIcon({html:html,className:'',iconSize:[18,18],iconAnchor:[9,9]}),zIndexOffset:2000,interactive:false}).addTo(map);
 }
 
 function updateRadius(v) {
@@ -1077,38 +825,38 @@ function updateRadius(v) {
 }
 
 function computeNearest() {
-  if(!userPos){nearestId=null;return;}
-  var best=null,minD=Infinity;
-  SPOTS.filter(filterMatch).forEach(function(s){var d=dist(userPos.lat,userPos.lng,s.lat,s.lng);if(d<minD){minD=d;best=s;}});
-  nearestId=best?best.id:null;
+  if (!userPos) { nearestId=null; return; }
+  var best=null, minD=Infinity;
+  SPOTS.filter(filterMatch).forEach(function(s) { var d=dist(userPos.lat,userPos.lng,s.lat,s.lng); if(d<minD){minD=d;best=s;} });
+  nearestId = best ? best.id : null;
 }
 
 function updateNearestBanner() {
-  var banner=document.getElementById("nearest-banner");
-  if(!userPos||!nearestId){banner.classList.remove("show");return;}
-  var s=SPOTS.find(function(x){return x.id===nearestId;});
-  var d=dist(userPos.lat,userPos.lng,s.lat,s.lng);
+  var banner = document.getElementById("nearest-banner");
+  if (!userPos||!nearestId) { banner.classList.remove("show"); return; }
+  var s = SPOTS.find(function(x){return x.id===nearestId;});
+  var d = dist(userPos.lat,userPos.lng,s.lat,s.lng);
   document.getElementById("nb-name").textContent=s.name;
   document.getElementById("nb-meta").textContent=(DIFF_CFG[s.diff]?DIFF_CFG[s.diff].label[lang]:s.diff)+" · "+s.surface+(s.length?" · "+s.length+"m":"");
   document.getElementById("nb-dist").textContent=fmtDist(d);
   banner.classList.add("show");
 }
 
-function goNearest(){if(nearestId)showDetail(nearestId);}
+function goNearest() { if(nearestId) showDetail(nearestId); }
 
 function updateFilterPill() {
-  var pill=document.getElementById("map-filter-pill");
-  if(activeFilter==="all"){pill.classList.remove("show");return;}
-  var cfg=FILTER_PILL_CFG[activeFilter];
-  if(!cfg){pill.classList.remove("show");return;}
-  var count=SPOTS.filter(filterMatch).length;
+  var pill = document.getElementById("map-filter-pill");
+  if (activeFilter==="all") { pill.classList.remove("show"); return; }
+  var cfg = FILTER_PILL_CFG[activeFilter];
+  if (!cfg) { pill.classList.remove("show"); return; }
+  var count = SPOTS.filter(filterMatch).length;
   pill.style.background=cfg.bg; pill.style.color=cfg.color; pill.style.border="1.5px solid "+cfg.color;
   pill.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:'+cfg.color+';display:inline-block;flex-shrink:0"></span>'+cfg.label+' — '+count+' spot'+(count>1?"s":"");
   pill.classList.add("show");
 }
 
 function doGeoSearch(q) {
-  q = q.trim(); if(!q) return;
+  q=q.trim(); if(!q) return;
   document.getElementById("search-clear").style.display="block";
   showToast("🔍 Recherche de "+q+"…");
   fetch("https://nominatim.openstreetmap.org/search?q="+encodeURIComponent(q)+"&countrycodes=fr&format=json&limit=1",{headers:{"Accept-Language":"fr"}})
@@ -1127,15 +875,15 @@ function doGeoSearch(q) {
 }
 
 function filterMatch(s) {
-  var pos=userPos||searchPos;
-  if(pos && osmRadius){ var d=dist(pos.lat,pos.lng,s.lat,s.lng); if(d>osmRadius) return false; }
-  if(activeFilter==="all") return true;
-  if(activeFilter==="kids") return s.kids===true;
-  if(activeFilter==="playground") return s.equip && s.equip.playground===true;
-  if(activeFilter==="skatepark") return s.equip && s.equip.skatepark===true;
-  if(activeFilter==="lit") return s.lit;
-  if(activeFilter==="free") return s.free;
-  if(activeFilter==="dirt") return s.surface==="dirt";
+  var pos = userPos||searchPos;
+  if (pos&&osmRadius) { var d=dist(pos.lat,pos.lng,s.lat,s.lng); if(d>osmRadius) return false; }
+  if (activeFilter==="all") return true;
+  if (activeFilter==="kids") return s.kids===true;
+  if (activeFilter==="playground") return s.equip&&s.equip.playground===true;
+  if (activeFilter==="skatepark") return s.equip&&s.equip.skatepark===true;
+  if (activeFilter==="lit") return s.lit;
+  if (activeFilter==="free") return s.free;
+  if (activeFilter==="dirt") return s.surface==="dirt";
   return true;
 }
 
@@ -1162,83 +910,46 @@ function showDetail(id) {
   var sCol=s.status==="ok"?"var(--green)":s.status==="warn"?"var(--orange)":"var(--red)";
   var isNearest=s.id===nearestId;
   var distBlock="";
-  if(userPos){
+  if (userPos) {
     var d=dist(userPos.lat,userPos.lng,s.lat,s.lng);
-    distBlock='<div class="dist-block"><div><div class="dist-num">'+fmtDist(d)+'</div>'
-      +'<div class="dist-lbl">'+t("detail_from_pos")+'</div>'
-      +'<div class="dist-bike">🚴 ~'+Math.round(d/20*60)+' min</div></div>'
-      +(isNearest?'<div style="background:var(--primary);color:#fff;padding:7px 12px;border-radius:9px;font-size:12px;font-weight:700">'+t("detail_nearest")+'</div>':"")
-      +'</div>';
+    distBlock='<div class="dist-block"><div><div class="dist-num">'+fmtDist(d)+'</div><div class="dist-lbl">'+t("detail_from_pos")+'</div><div class="dist-bike">🚴 ~'+Math.round(d/20*60)+' min</div></div>'+(isNearest?'<div style="background:var(--primary);color:#fff;padding:7px 12px;border-radius:9px;font-size:12px;font-weight:700">'+t("detail_nearest")+'</div>':"")+'</div>';
   }
-  var icoHtml=s.photo
-    ?'<img src="'+s.photo+'" style="width:56px;height:56px;border-radius:16px;object-fit:cover;flex-shrink:0" onerror="this.src=\'https://i.ibb.co/svKcfJwd/logos-app.png\'">'
-    :'<img src="https://i.ibb.co/svKcfJwd/logos-app.png" style="width:56px;height:56px;border-radius:16px;object-fit:cover;flex-shrink:0">';
-  var builderBlock='<div class="builder-block '+b.cls+'">'
-    +'<div class="builder-ico">'+b.icon+'</div>'
-    +'<div><div class="builder-name" style="color:'+b.color+'">'+b.label+'</div>'
-    +'<div class="builder-desc">'+b.desc+'</div></div>'
-    +(SOURCE_BADGE[s.source]||"")+'</div>';
+  var icoHtml=s.photo?'<img src="'+s.photo+'" style="width:56px;height:56px;border-radius:16px;object-fit:cover;flex-shrink:0" onerror="this.src=\'https://i.ibb.co/svKcfJwd/logos-app.png\'">':'<img src="https://i.ibb.co/svKcfJwd/logos-app.png" style="width:56px;height:56px;border-radius:16px;object-fit:cover;flex-shrink:0">';
+  var builderBlock='<div class="builder-block '+b.cls+'"><div class="builder-ico">'+b.icon+'</div><div><div class="builder-name" style="color:'+b.color+'">'+b.label+'</div><div class="builder-desc">'+b.desc+'</div></div>'+(SOURCE_BADGE[s.source]||"")+'</div>';
   var eq=s.equip||{};
-  var eqItems=[{k:"toilets",fr:"🚻 "+t("equip_toilets").replace(/^../,"")},{k:"fountain",fr:"⛲ "+t("equip_fountain").replace(/^../,"")},{k:"picnic",fr:"🍽️ "+t("equip_picnic").replace(/^../,"")},{k:"skatepark",fr:"🛹 "+t("equip_skate").replace(/^../,"")},{k:"playground",fr:"🛝 "+t("equip_playground").replace(/^../,"")},{k:"parking",fr:"🅿️ "+t("equip_parking").replace(/^../,"")},{k:"kidszone",fr:"👶 "+t("equip_kids").replace(/^../,"")}];
+  var eqItems=[{k:"toilets",fr:"🚻 Toilettes"},{k:"fountain",fr:"⛲ Fontaine"},{k:"picnic",fr:"🍽️ Picnic"},{k:"skatepark",fr:"🛹 Skatepark"},{k:"playground",fr:"🛝 Aire de jeux"},{k:"parking",fr:"🅿️ Parking"},{k:"kidszone",fr:"👶 Kids zone"}];
   var eqPresent=eqItems.filter(function(e){return eq[e.k];});
-  var eqBlock='<div class="detail-section"><div class="section-title">'+t("detail_equip")+'</div>'
-    +'<div class="equip-osm"><div class="equip-osm-lbl">'+t("detail_osm_lbl")+'</div>'
-    +'<div class="chip-grid">'+(eqPresent.length?eqPresent.map(function(e){return '<div class="info-chip equip">'+e.fr+'</div>';}).join(""):'<span style="font-size:12px;color:var(--gray3)">'+t("detail_no_equip")+'</span>')
-    +'</div></div></div>';
-  var caraBlock='<div class="detail-section"><div class="section-title">'+t("detail_chars")+'</div>'
-    +'<div class="chip-grid">'
-    +(s.length?'<div class="info-chip yes">📏 '+s.length+'m</div>':"")
-    +(s.alt?'<div class="info-chip yes">⛰️ '+s.alt+'m</div>':"")
-    +'<div class="info-chip yes">🛣️ '+s.surface+'</div>'
-    +(s.lit?'<div class="info-chip yes">'+t("chip_lit")+'</div>':"")
-    +(s.free?'<div class="info-chip yes">'+t("chip_free")+'</div>':'<div class="info-chip">🎫 '+(lang==="fr"?"Payant":"Paid")+'</div>')
-    +(s.kids?'<div class="info-chip yes">'+t("chip_kids")+'</div>':"")
-    +(eq.playground?'<div class="info-chip yes">'+t("chip_playground")+'</div>':"")
-    +'<div class="'+df.cls+'">'+df.icon+" "+df.label[lang]+'</div>'
-    +'</div></div>';
+  var eqBlock='<div class="detail-section"><div class="section-title">'+t("detail_equip")+'</div><div class="equip-osm"><div class="equip-osm-lbl">'+t("detail_osm_lbl")+'</div><div class="chip-grid">'+(eqPresent.length?eqPresent.map(function(e){return '<div class="info-chip equip">'+e.fr+'</div>';}).join(""):'<span style="font-size:12px;color:var(--gray3)">'+t("detail_no_equip")+'</span>')+'</div></div></div>';
+  var caraBlock='<div class="detail-section"><div class="section-title">'+t("detail_chars")+'</div><div class="chip-grid">'+(s.length?'<div class="info-chip yes">📏 '+s.length+'m</div>':"")+(s.alt?'<div class="info-chip yes">⛰️ '+s.alt+'m</div>':"")+'<div class="info-chip yes">🛣️ '+s.surface+'</div>'+(s.lit?'<div class="info-chip yes">'+t("chip_lit")+'</div>':"")+(s.free?'<div class="info-chip yes">'+t("chip_free")+'</div>':'<div class="info-chip">🎫 '+(lang==="fr"?"Payant":"Paid")+'</div>')+(s.kids?'<div class="info-chip yes">'+t("chip_kids")+'</div>':"")+(eq.playground?'<div class="info-chip yes">'+t("chip_playground")+'</div>':"")+'<div class="'+df.cls+'">'+df.icon+" "+df.label[lang]+'</div></div></div>';
   var panel=document.getElementById("detail-panel");
-  panel.innerHTML=
-    '<div class="detail-handle"></div>'
-    +'<div class="detail-header">'+icoHtml
-    +'<div class="detail-title"><h2>'+s.name+'</h2><p>'+(s.city||"")+(s.alt?' · '+s.alt+'m':"")+'</p></div>'
-    +'<button class="fav-btn" id="fav-btn-'+s.id+'" onclick="toggleFav('+s.id+')">'+(isFav?"⭐":"☆")+'</button>'
-    +'</div>'
-    +distBlock+builderBlock+caraBlock+eqBlock
-    +(s.photo?'<div class="detail-section"><img src="'+s.photo+'" style="width:100%;border-radius:var(--radius);object-fit:cover;max-height:180px;display:block" onerror="this.style.display=\'none\'"/></div>':"")
-    +(s.desc?'<div class="detail-section"><div class="section-title">'+t("detail_desc")+'</div><div style="font-size:13px;line-height:1.6;color:var(--black)">'+s.desc+'</div></div>':"")
-    +(s.ourouler_url?'<div class="detail-section"><a href="'+s.ourouler_url+'" target="_blank" style="display:flex;align-items:center;gap:8px;background:#fff8f0;border:1.5px solid #e65100;border-radius:var(--radius-sm);padding:10px 14px;text-decoration:none"><span style="font-size:16px">🔗</span><span style="font-size:12px;font-weight:700;color:#e65100">'+t("detail_ourouler")+'</span></a></div>':"")
-    +'<div class="detail-section"><div class="section-title">'+t("detail_status")+'</div>'
-    +'<div class="status-row"><span style="font-size:17px">'+sIco+'</span><span style="color:'+sCol+'">'+s.status_msg+'</span>'
-    +'<span style="margin-left:auto;font-size:11px;color:var(--gray3)">✅ '+s.confirmations+' confirmations</span></div></div>'
-    +'<div class="detail-section"><div class="section-title">'+t("detail_report")+'</div>'
-    +'<div class="report-grid">'
-    +'<button class="report-btn" style="border-color:var(--green);color:var(--green)" onclick="reportSpot(\''+s.id+'\',\'ok\')">'+t("report_ok")+'</button>'
-    +'<button class="report-btn" style="border-color:var(--orange);color:var(--orange)" onclick="reportSpot(\''+s.id+'\',\'warn\')">'+t("report_warn")+'</button>'
-    +'<button class="report-btn" style="border-color:var(--red);color:var(--red)" onclick="reportSpot(\''+s.id+'\',\'hs\')">'+t("report_hs")+'</button>'
-    +'</div></div>'
-    +'<div class="detail-actions">'
-    +'<button class="btn-primary" onclick="navigate('+s.lat+','+s.lng+')">'+t("detail_route")+'</button>'
-    +'<button class="btn-secondary" onclick="closeDetail()">'+t("detail_close")+'</button>'
-    +'</div>';
+  panel.innerHTML='<div class="detail-handle"></div><div class="detail-header">'+icoHtml+'<div class="detail-title"><h2>'+s.name+'</h2><p>'+(s.city||"")+(s.alt?' · '+s.alt+'m':"")+'</p></div><button class="fav-btn" id="fav-btn-'+s.id+'" onclick="toggleFav(\''+s.id+'\')"> '+(isFav?"⭐":"☆")+'</button></div>'+distBlock+builderBlock+caraBlock+eqBlock+(s.photo?'<div class="detail-section"><img src="'+s.photo+'" style="width:100%;border-radius:var(--radius);object-fit:cover;max-height:180px;display:block" onerror="this.style.display=\'none\'"/></div>':"")+(s.desc?'<div class="detail-section"><div class="section-title">'+t("detail_desc")+'</div><div style="font-size:13px;line-height:1.6;color:var(--black)">'+s.desc+'</div></div>':"")+(s.ourouler_url?'<div class="detail-section"><a href="'+s.ourouler_url+'" target="_blank" style="display:flex;align-items:center;gap:8px;background:#fff8f0;border:1.5px solid #e65100;border-radius:var(--radius-sm);padding:10px 14px;text-decoration:none"><span style="font-size:16px">🔗</span><span style="font-size:12px;font-weight:700;color:#e65100">'+t("detail_ourouler")+'</span></a></div>':"")+'<div class="detail-section"><div class="section-title">'+t("detail_status")+'</div><div class="status-row"><span style="font-size:17px">'+sIco+'</span><span style="color:'+sCol+'">'+s.status_msg+'</span><span style="margin-left:auto;font-size:11px;color:var(--gray3)">✅ '+s.confirmations+' confirmations</span></div></div><div class="detail-section"><div class="section-title">'+t("detail_report")+'</div><div class="report-grid"><button class="report-btn" style="border-color:var(--green);color:var(--green)" onclick="reportSpot(\''+s.id+'\',\'ok\')">'+t("report_ok")+'</button><button class="report-btn" style="border-color:var(--orange);color:var(--orange)" onclick="reportSpot(\''+s.id+'\',\'warn\')">'+t("report_warn")+'</button><button class="report-btn" style="border-color:var(--red);color:var(--red)" onclick="reportSpot(\''+s.id+'\',\'hs\')">'+t("report_hs")+'</button></div></div><div class="detail-actions"><button class="btn-primary" onclick="navigate('+s.lat+','+s.lng+')">'+t("detail_route")+'</button><button class="btn-secondary" onclick="closeDetail()">'+t("detail_close")+'</button></div>';
   panel.style.display="block";
   document.getElementById("overlay").classList.add("show");
-  if(map) map.panTo([s.lat,s.lng]);
-  var sy=0, ss=0, drag=false;
+  if (map) map.panTo([s.lat,s.lng]);
+  var sy=0,ss=0,drag=false;
   panel.ontouchstart=function(e){sy=e.touches[0].clientY;ss=panel.scrollTop;drag=true;panel.style.transition="none";};
   panel.ontouchmove=function(e){if(!drag)return;var dy=e.touches[0].clientY-sy;if(dy>0&&ss<=0){e.preventDefault();panel.style.transform="translateX(-50%) translateY("+dy+"px)";}};
   panel.ontouchend=function(e){if(!drag)return;drag=false;var dy=e.changedTouches[0].clientY-sy;panel.style.transition="transform .28s ease";if(dy>80&&ss<=0){panel.style.transform="translateX(-50%) translateY(100%)";setTimeout(function(){panel.style.transform="";closeDetail();},300);}else{panel.style.transform="";}};
 }
 
 function closeDetail(){document.getElementById("detail-panel").style.display="none";document.getElementById("overlay").classList.remove("show");}
-function toggleFav(id){favorites.has(id)?favorites.delete(id):favorites.add(id);var b=document.getElementById("fav-btn-"+id);if(b)b.textContent=favorites.has(id)?"⭐":"☆";showToast(favorites.has(id)?"⭐ Ajouté aux favoris":"Retiré des favoris");}
+
+function toggleFav(id){
+  if(favorites.has(id)) favorites.delete(id); else favorites.add(id);
+  var b=document.getElementById("fav-btn-"+id);
+  if(b) b.textContent=favorites.has(id)?"⭐":"☆";
+  showToast(favorites.has(id)?"⭐ Ajouté aux favoris":"Retiré des favoris");
+}
+
 function reportSpot(id,type){
   var s=SPOTS.find(function(x){return x.id===id;}); if(!s) return;
   if(type==="ok"){s.status="ok";s.status_msg="Tout fonctionne ✅";s.confirmations++;}
   else if(type==="warn"){s.status="warn";s.status_msg="Problème signalé ⚠️";}
   else{s.status="hs";s.status_msg="🔴 Fermé";}
-  saveReportToSupabase(id, s.source, type).catch(function(e){ console.warn('Report save error:', e); });
+  saveReportToSupabase(id,s.source,type).catch(function(e){console.warn('Report save error:',e);});
   showToast("Merci pour le signalement !"); renderMarkers(); showDetail(id);
 }
+
 function navigate(lat,lng){showToast("🗺️ Ouverture itinéraire…");window.open("https://www.openstreetmap.org/directions?to="+lat+","+lng,"_blank");}
 
 function renderList() {
@@ -1246,13 +957,8 @@ function renderList() {
   var filtered=SPOTS.filter(filterMatch);
   if(userPos) filtered=filtered.map(function(s){return Object.assign({},s,{_d:dist(userPos.lat,userPos.lng,s.lat,s.lng)});}).sort(function(a,b){return a._d-b._d;});
   if(!filtered.length){
-    var filterName = activeFilter==="all" ? "" : (FILTER_PILL_CFG[activeFilter]?FILTER_PILL_CFG[activeFilter].label:activeFilter);
-    el.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;">'
-      +'<img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:36px;width:auto;margin-bottom:20px;opacity:0.35;"/>'
-      +'<div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px;">Pas de pumptrack ici… encore !</div>'
-      +'<div style="font-size:13px;color:#aaa;font-weight:500;line-height:1.6;margin-bottom:24px;">'+(filterName?'Aucun spot "'+filterName+'" trouvé dans cette zone.<br>':'Aucun spot trouvé dans cette zone.<br>')+'Essaie d\'élargir le rayon ou de changer de filtre.</div>'
-      +'<button onclick="resetFilters()" style="background:var(--primary);color:#fff;border:none;border-radius:12px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">Voir tous les spots</button>'
-      +'</div>';
+    var filterName=activeFilter==="all"?"":(FILTER_PILL_CFG[activeFilter]?FILTER_PILL_CFG[activeFilter].label:activeFilter);
+    el.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;"><img src="https://i.ibb.co/QvhV7c2t/logos-header.png" style="height:36px;width:auto;margin-bottom:20px;opacity:0.35;"/><div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px;">Pas de pumptrack ici… encore !</div><div style="font-size:13px;color:#aaa;font-weight:500;line-height:1.6;margin-bottom:24px;">'+(filterName?'Aucun spot "'+filterName+'" trouvé dans cette zone.<br>':'Aucun spot trouvé dans cette zone.<br>')+'Essaie d\'élargir le rayon ou de changer de filtre.</div><button onclick="resetFilters()" style="background:var(--primary);color:#fff;border:none;border-radius:12px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);">Voir tous les spots</button></div>';
     return;
   }
   var hdr=userPos?'<div style="font-size:11px;color:var(--gray3);font-weight:600;padding:2px 0 10px;text-align:center">📍 Triés par distance</div>':"";
@@ -1261,29 +967,16 @@ function renderList() {
     var df=DIFF_CFG[s.diff]||DIFF_CFG.inter;
     var isN=userPos&&i===0;
     var distTag=userPos?'<span class="tag '+(isN?"tag-dist":"tag-dist-pale")+'">'+fmtDist(s._d)+'</span>':"";
-    var thumb=s.photo
-      ?'<img src="'+s.photo+'" class="card-thumb" onerror="this.src=\'https://i.ibb.co/svKcfJwd/logos-app.png\'">'
-      :'<img src="https://i.ibb.co/svKcfJwd/logos-app.png" class="card-thumb">';
-    return '<div class="list-card'+(isN?" is-nearest":"")+'" onclick="openFromList('+s.id+')">'
-      +thumb+'<div class="card-body">'
-      +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">'
-      +'<div class="card-name">'+s.name+'</div>'+(isN?'<span class="nearest-badge">⚡ + proche</span>':"")+'</div>'
-      +'<div class="card-sub">'+(s.city||"")+(s.alt?' · '+s.alt+'m':"")+(s.length?' · '+s.length+'m':"")+'</div>'
-      +'<div class="card-tags">'
-      +'<span class="badge-'+b.cls+'">'+b.icon+' '+b.label+'</span>'
-      +(s.kids?'<span class="tag tag-kids">🛴 Kid Zone</span>':"")
-      +((s.equip&&s.equip.playground)?'<span class="tag tag-playground">🛝 Aire de jeux</span>':"")
-      +(s.lit?'<span class="tag tag-orange">💡 Éclairé</span>':"")
-      +(s.status!=="ok"?'<span class="tag tag-red">'+s.status_msg+'</span>':'<span class="tag tag-green">✅</span>')
-      +distTag+'</div></div></div>';
+    var thumb=s.photo?'<img src="'+s.photo+'" class="card-thumb" onerror="this.src=\'https://i.ibb.co/svKcfJwd/logos-app.png\'">':'<img src="https://i.ibb.co/svKcfJwd/logos-app.png" class="card-thumb">';
+    return '<div class="list-card'+(isN?" is-nearest":"")+'" onclick="openFromList(\''+s.id+'\')">'+thumb+'<div class="card-body"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px"><div class="card-name">'+s.name+'</div>'+(isN?'<span class="nearest-badge">⚡ + proche</span>':"")+'</div><div class="card-sub">'+(s.city||"")+(s.alt?' · '+s.alt+'m':"")+(s.length?' · '+s.length+'m':"")+'</div><div class="card-tags"><span class="badge-'+b.cls+'">'+b.icon+' '+b.label+'</span>'+(s.kids?'<span class="tag tag-kids">🛴 Kid Zone</span>':"")+(s.equip&&s.equip.playground?'<span class="tag tag-playground">🛝 Aire de jeux</span>':"")+(s.lit?'<span class="tag tag-orange">💡 Éclairé</span>':"")+(s.status!=="ok"?'<span class="tag tag-red">'+s.status_msg+'</span>':'<span class="tag tag-green">✅</span>')+distTag+'</div></div></div>';
   }).join("");
 }
 
 function navMapClick(btn) {
-  var alreadyActive = btn.classList.contains("active");
-  showScreen("map-screen", btn);
-  if (alreadyActive) {
-    userPos=null; searchPos=null; nearestId=null;
+  var alreadyActive=btn.classList.contains("active");
+  showScreen("map-screen",btn);
+  if(alreadyActive){
+    userPos=null;searchPos=null;nearestId=null;
     if(userMarker){userMarker.remove();userMarker=null;}
     document.getElementById("nearest-banner").classList.remove("show");
     document.getElementById("radius-bar").style.display="none";
@@ -1293,8 +986,8 @@ function navMapClick(btn) {
     activeFilter="all";
     document.querySelectorAll(".chip,.chip-pill").forEach(function(c){c.classList.remove("active");});
     document.querySelector(".chip[data-f='all']").classList.add("active");
-    updateFilterPill(); map.setView([46.5,2.5],6);
-    renderMarkers(); renderList(); showToast("🗺️ Vue France entière");
+    updateFilterPill();map.setView([46.5,2.5],6);
+    renderMarkers();renderList();showToast("🗺️ Vue France entière");
   }
 }
 
@@ -1302,7 +995,7 @@ function resetFilters(){
   activeFilter="all";
   document.querySelectorAll(".chip,.chip-pill").forEach(function(c){c.classList.remove("active");});
   document.querySelector(".chip[data-f='all']").classList.add("active");
-  updateFilterPill(); computeNearest(); renderMarkers(); renderList();
+  updateFilterPill();computeNearest();renderMarkers();renderList();
 }
 
 function openFromList(id){showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);setTimeout(function(){showDetail(id);},150);}
@@ -1365,48 +1058,104 @@ function submitSpot(){
   var equip={};
   document.querySelectorAll(".equip-tile.sel").forEach(function(t){
     var txt=t.textContent.trim();
-    if(txt.includes("Éclairage")||txt.includes("Lighting"))equip.lit=true;
-    if(txt.includes("libre")||txt.includes("Free"))equip.free=true;
-    if(txt.includes("Toilettes")||txt.includes("Toilets"))equip.toilets=true;
-    if(txt.includes("Fontaine")||txt.includes("Fountain"))equip.fountain=true;
-    if(txt.includes("Picnic"))equip.picnic=true;
-    if(txt.includes("Skatepark"))equip.skatepark=true;
-    if(txt.includes("jeux")||txt.includes("Playground"))equip.playground=true;
-    if(txt.includes("Parking"))equip.parking=true;
-    if(txt.includes("Kids"))equip.kidszone=true;
+    if(txt.indexOf("Éclairage")!==-1||txt.indexOf("Lighting")!==-1)equip.lit=true;
+    if(txt.indexOf("libre")!==-1||txt.indexOf("Free")!==-1)equip.free=true;
+    if(txt.indexOf("Toilettes")!==-1||txt.indexOf("Toilets")!==-1)equip.toilets=true;
+    if(txt.indexOf("Fontaine")!==-1||txt.indexOf("Fountain")!==-1)equip.fountain=true;
+    if(txt.indexOf("Picnic")!==-1)equip.picnic=true;
+    if(txt.indexOf("Skatepark")!==-1)equip.skatepark=true;
+    if(txt.indexOf("jeux")!==-1||txt.indexOf("Playground")!==-1)equip.playground=true;
+    if(txt.indexOf("Parking")!==-1)equip.parking=true;
+    if(txt.indexOf("Kids")!==-1)equip.kidszone=true;
   });
-  var newSpot={
-    id:'c_tmp_'+Date.now(), name:n,
-    city:document.getElementById("add-city").value.trim()||'',
-    lat:lat, lng:lng, alt:0, builder:selectedBuilder||'inconnu',
-    diff:selectedDiff, length:0, surface:selectedSurface||'asphalt',
-    lit:!!equip.lit, free:!!equip.free, kids:!!equip.kidszone,
-    photo:'', ourouler_url:'', status:'ok',
-    status_msg:'Ajouté par la communauté', confirmations:0,
-    source:'manual', equip:equip, desc:document.getElementById("add-desc").value.trim()
-  };
+  var newSpot={id:'c_tmp_'+Date.now(),name:n,city:document.getElementById("add-city").value.trim()||'',lat:lat,lng:lng,alt:0,builder:selectedBuilder||'inconnu',diff:selectedDiff,length:0,surface:selectedSurface||'asphalt',lit:!!equip.lit,free:!!equip.free,kids:!!equip.kidszone,photo:'',ourouler_url:'',status:'ok',status_msg:'Ajouté par la communauté',confirmations:0,source:'manual',equip:equip,desc:document.getElementById("add-desc").value.trim()};
   showToast("⏳ Envoi en cours…");
-  saveSpotToSupabase(newSpot)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(data && data[0] && data[0].id){ newSpot.id = 'c_' + data[0].id; }
-      SPOTS.push(newSpot); renderMarkers(); renderList();
-      showToast("✅ Spot ajouté !"); resetStepper();
-      showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
-    })
-    .catch(function(){
-      SPOTS.push(newSpot); renderMarkers(); renderList();
-      showToast("✅ Spot ajouté (hors ligne)"); resetStepper();
-      showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
-    });
+  saveSpotToSupabase(newSpot).then(function(r){return r.json();}).then(function(data){
+    if(data&&data[0]&&data[0].id){newSpot.id='c_'+data[0].id;}
+    SPOTS.push(newSpot);renderMarkers();renderList();
+    showToast("✅ Spot ajouté !");resetStepper();
+    showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
+  }).catch(function(){
+    SPOTS.push(newSpot);renderMarkers();renderList();
+    showToast("✅ Spot ajouté (hors ligne)");resetStepper();
+    showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
+  });
 }
 
-function doLogin(){var u=document.getElementById("login-user").value.trim(),p=document.getElementById("login-pass").value;if(!u||!p){showToast("⚠️ Champs requis");return;}var found=DEMO_ACCOUNTS.find(function(a){return a.username===u&&a.password===p;});if(!found){showToast("❌ Identifiants incorrects");return;}currentUser=Object.assign({},found);showToast("✅ Bienvenue "+currentUser.username+" !");showScreen("profile-screen",document.querySelectorAll(".nav-btn")[3]);}
-function doRegister(){var u=document.getElementById("reg-user").value.trim(),e=document.getElementById("reg-email").value.trim(),p=document.getElementById("reg-pass").value,p2=document.getElementById("reg-pass2").value;if(!u||!e||!p){showToast("⚠️ Tous les champs requis");return;}if(p!==p2){showToast("❌ Mots de passe différents");return;}if(!document.getElementById("reg-cgu").checked){showToast("⚠️ Acceptez les CGU");return;}currentUser={username:u,email:e,role:"contrib",contributions:0,avatar:u[0].toUpperCase()};showToast("🎉 Bienvenue "+u+" !");showScreen("profile-screen",document.querySelectorAll(".nav-btn")[3]);}
 function doGuestMode(){currentUser={username:"Invité",role:"guest",contributions:0,avatar:"?"};showToast("👀 Mode invité");showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);}
-function doLogout(){currentUser=null;showScreen("auth-screen",document.querySelectorAll(".nav-btn")[3]);showToast("À bientôt !");}
 function switchAuthTab(tab){var isL=tab==="login";document.getElementById("auth-login").style.display=isL?"block":"none";document.getElementById("auth-register").style.display=isL?"none":"block";document.getElementById("tab-login").className="auth-tab "+(isL?"active":"inactive");document.getElementById("tab-register").className="auth-tab "+(isL?"inactive":"active");}
 function togglePwd(id,btn){var el=document.getElementById(id);el.type=el.type==="password"?"text":"password";btn.textContent=el.type==="password"?"👁":"🙈";}
+
+function renderProfile(){
+  if(!currentUser){showScreen("auth-screen",null);return;}
+  var rBadge=currentUser.role==="admin"?"⚙️ Admin":currentUser.role==="guest"?"👀 "+t("auth_guest"):"🚴 Rider";
+  document.getElementById("profile-content").innerHTML='<div class="user-card"><div class="avatar">'+currentUser.avatar+'</div><div><div class="user-name">'+currentUser.username+'</div><span class="badge-role">'+rBadge+'</span>'+(currentUser.email?'<div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:3px">'+currentUser.email+'</div>':"")+'</div></div>'+'<div class="stat-row"><div class="stat-card"><div class="stat-num">'+currentUser.contributions+'</div><div class="stat-lbl">'+t("profile_spots")+'</div></div><div class="stat-card"><div class="stat-num">'+favorites.size+'</div><div class="stat-lbl">'+t("profile_favs")+'</div></div><div class="stat-card"><div class="stat-num">'+SPOTS.length+'</div><div class="stat-lbl">'+t("profile_total")+'</div></div></div>'+'<div class="menu-card"><div class="menu-item"><div class="menu-ico" style="background:#fff9c4">⭐</div><span class="menu-txt">'+t("profile_myfavs")+'</span><span class="menu-arrow">›</span></div><div class="menu-item"><div class="menu-ico" style="background:var(--primary-pale)">🚴</div><span class="menu-txt">'+t("profile_myspots")+'</span><span class="menu-arrow">›</span></div><div class="menu-item" onclick="toggleLang()"><div class="menu-ico" style="background:#e3f2fd">🌍</div><span class="menu-txt">'+t("profile_lang")+'</span><span class="menu-arrow">›</span></div><div class="menu-item"><div class="menu-ico" style="background:var(--gray)">⚙️</div><span class="menu-txt">'+t("profile_settings")+'</span><span class="menu-arrow">›</span></div><div class="menu-item" onclick="doLogout()"><div class="menu-ico" style="background:#fde8e8">🚪</div><span class="menu-txt" style="color:var(--red)">'+t("profile_logout")+'</span></div></div>';
+}
+
+function applyLang(){
+  document.querySelectorAll(".nav-lbl")[0].textContent=t("nav_map");
+  document.querySelectorAll(".nav-lbl")[1].textContent=t("nav_list");
+  document.querySelectorAll(".nav-lbl")[2].textContent=t("nav_add");
+  document.querySelectorAll(".nav-lbl")[3].textContent=t("nav_profile");
+  document.querySelector(".chip[data-f='all'] .chip-lbl").textContent=t("filter_all");
+  document.querySelector(".chip[data-f='kids'] .chip-lbl").textContent=t("filter_kids");
+  document.querySelector(".chip[data-f='playground'] .chip-lbl").textContent=t("filter_playground");
+  document.querySelector(".chip[data-f='skatepark'] .chip-lbl").textContent=t("filter_skatepark");
+  function setPillText(sel,txt){var el=document.querySelector(sel);if(!el)return;var nodes=Array.from(el.childNodes).filter(function(n){return n.nodeType===3;});if(nodes.length)nodes[nodes.length-1].textContent=" "+txt;}
+  setPillText(".chip-pill[data-f='dirt']",t("filter_dirt"));
+  setPillText(".chip-pill[data-f='lit']",t("filter_lit"));
+  setPillText(".chip-pill[data-f='free']",t("filter_free"));
+  document.getElementById("search-input").placeholder=t("search_placeholder");
+  document.querySelector(".nb-tag").textContent=t("nearest_tag");
+  document.querySelector(".radius-bar label").textContent=t("radius_label");
+  document.querySelectorAll(".step-lbl")[0].textContent=t("add_step1");
+  document.querySelectorAll(".step-lbl")[1].textContent=t("add_step2");
+  document.querySelectorAll(".step-lbl")[2].textContent=t("add_step3");
+  document.getElementById("tab-login").textContent=t("auth_login");
+  document.getElementById("tab-register").textContent=t("auth_register");
+  document.querySelector(".auth-bg div div").textContent=t("auth_tagline");
+  BUILDERS.bs.desc=t("builder_desc_bs");BUILDERS.vs.desc=t("builder_desc_vs");
+  BUILDERS.commune.desc=t("builder_desc_commune");BUILDERS.asso.desc=t("builder_desc_asso");
+  BUILDERS.inconnu.desc=t("builder_desc_inconnu");
+}
+
+function toggleLang(){
+  lang=lang==="fr"?"en":"fr";
+  document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";
+  document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";
+  applyLang();renderList();
+  if(currentUser)renderProfile();
+}
+
+function showScreen(id,btn){
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});
+  document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.remove("active");});
+  if(id==="profile-screen"&&!currentUser)id="auth-screen";
+  if(id==="add-screen"&&(!currentUser||currentUser.role==="guest")){showToast("🔒 Connexion requise pour ajouter");id="auth-screen";}
+  document.getElementById(id).classList.add("active");
+  if(btn)btn.classList.add("active");
+  var sf=id==="map-screen"||id==="list-screen";
+  document.getElementById("filter-bar").style.display=sf?"flex":"none";
+  if(!sf&&searchOpen){searchOpen=false;document.getElementById("header-search").classList.remove("open");}
+  if(id==="list-screen")renderList();
+  if(id==="profile-screen")renderProfile();
+  if(id==="map-screen")setTimeout(function(){if(map)map.invalidateSize();},100);
+  closeDetail();
+}
+
+function dist(la1,lo1,la2,lo2){var R=6371,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;var a=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)*Math.sin(dLo/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function fmtDist(d){return d<1?(d*1000).toFixed(0)+"m":d.toFixed(1)+"km";}
+function showToast(msg){var el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove("show");},2800);}
+function toggleSearch(){searchOpen=!searchOpen;document.getElementById("header-search").classList.toggle("open",searchOpen);if(searchOpen)setTimeout(function(){document.getElementById("search-input").focus();},320);else clearSearch();}
+function clearSearch(){
+  searchPos=null;searchQuery="";userPos=null;
+  if(userMarker){userMarker.remove();userMarker=null;}
+  var el=document.getElementById("search-input");if(el)el.value="";
+  document.getElementById("search-clear").style.display="none";
+  document.getElementById("nearest-banner").classList.remove("show");
+  document.getElementById("radius-bar").style.display="none";
+  nearestId=null;map.setView([46.5,2.5],6);renderMarkers();renderList();
+}
 
 window.addEventListener("load", function(){
   SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
@@ -1417,63 +1166,10 @@ window.addEventListener("load", function(){
     setTimeout(showInstallPopup, 2000);
   });
 });
-  if(!currentUser){showScreen("auth-screen",null);return;}
-  var rBadge=currentUser.role==="admin"?"⚙️ Admin":currentUser.role==="guest"?"👀 "+t("auth_guest"):"🚴 Rider";
-  document.getElementById("profile-content").innerHTML=
-    '<div class="user-card"><div class="avatar">'+currentUser.avatar+'</div><div><div class="user-name">'+currentUser.username+'</div><span class="badge-role">'+rBadge+'</span>'+(currentUser.email?'<div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:3px">'+currentUser.email+'</div>':"")+'</div></div>'
-    +'<div class="stat-row"><div class="stat-card"><div class="stat-num">'+currentUser.contributions+'</div><div class="stat-lbl">'+t("profile_spots")+'</div></div><div class="stat-card"><div class="stat-num">'+favorites.size+'</div><div class="stat-lbl">'+t("profile_favs")+'</div></div><div class="stat-card"><div class="stat-num">'+SPOTS.length+'</div><div class="stat-lbl">'+t("profile_total")+'</div></div></div>'
-    +'<div class="menu-card">'
-    +'<div class="menu-item"><div class="menu-ico" style="background:#fff9c4">⭐</div><span class="menu-txt">'+t("profile_myfavs")+'</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item"><div class="menu-ico" style="background:var(--primary-pale)">🚴</div><span class="menu-txt">'+t("profile_myspots")+'</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item" onclick="toggleLang()"><div class="menu-ico" style="background:#e3f2fd">🌍</div><span class="menu-txt">'+t("profile_lang")+'</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item"><div class="menu-ico" style="background:var(--gray)">⚙️</div><span class="menu-txt">'+t("profile_settings")+'</span><span class="menu-arrow">›</span></div>'
-    +'<div class="menu-item" onclick="doLogout()"><div class="menu-ico" style="background:#fde8e8">🚪</div><span class="menu-txt" style="color:var(--red)">'+t("profile_logout")+'</span></div>'
-    +'</div>';
-}
-
-function dist(la1,lo1,la2,lo2){var R=6371,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;var a=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)*Math.sin(dLo/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
-function fmtDist(d){return d<1?(d*1000).toFixed(0)+"m":d.toFixed(1)+"km";}
-function showToast(msg){var el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove("show");},2800);}
-function toggleSearch(){searchOpen=!searchOpen;document.getElementById("header-search").classList.toggle("open",searchOpen);if(searchOpen)setTimeout(function(){document.getElementById("search-input").focus();},320);else clearSearch();}
-function onSearch(v){}
-function clearSearch(){
-  searchPos=null; searchQuery=""; userPos=null;
-  if(userMarker){userMarker.remove();userMarker=null;}
-  var el=document.getElementById("search-input");if(el)el.value="";
-  document.getElementById("search-clear").style.display="none";
-  document.getElementById("nearest-banner").classList.remove("show");
-  document.getElementById("radius-bar").style.display="none";
-  nearestId=null; map.setView([46.5,2.5],6); renderMarkers(); renderList();
-}
-function toggleLang(){
-  lang=lang==="fr"?"en":"fr";
-  document.getElementById("lang-flag-active").textContent=lang==="fr"?"🇫🇷":"🇬🇧";
-  document.getElementById("lang-flag-other").textContent=lang==="fr"?"🇬🇧":"🇫🇷";
-  applyLang(); renderList();
-  if(currentUser) renderProfile();
-}
-
-function showScreen(id,btn){
-  document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});
-  document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.remove("active");});
-  if(id==="profile-screen"&&!currentUser) id="auth-screen";
-  if(id==="add-screen"&&(!currentUser||currentUser.role==="guest")){showToast("🔒 Connexion requise pour ajouter");id="auth-screen";}
-  document.getElementById(id).classList.add("active");
-  if(btn) btn.classList.add("active");
-  var sf=id==="map-screen"||id==="list-screen";
-  document.getElementById("filter-bar").style.display=sf?"flex":"none";
-  if(!sf&&searchOpen){searchOpen=false;document.getElementById("header-search").classList.remove("open");}
-  if(id==="list-screen") renderList();
-  if(id==="profile-screen") renderProfile();
-  if(id==="map-screen") setTimeout(function(){if(map)map.invalidateSize();},100);
-  closeDetail();
-}
-
-function renderProfile(){
 </script>
 <script>
-if('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
     navigator.serviceWorker.register('/pumpfinder/sw.js');
   });
 }
