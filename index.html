@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="MarkerCluster.Default.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="markercluster.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --primary:#e0000f;--primary-light:#ff2233;--primary-pale:#fff0f1;
@@ -248,6 +249,15 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 </style>
 </head>
 <body>
+
+<!-- ÉCRAN CONFIRMATION EMAIL -->
+<div id="confirm-overlay" style="display:none;position:fixed;inset:0;background:#fff;z-index:99998;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;">
+  <div style="font-size:56px;margin-bottom:20px;">📧</div>
+  <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:10px;">Vérifie tes emails</div>
+  <div style="font-size:14px;color:#888;line-height:1.7;margin-bottom:28px;" id="confirm-msg">Un lien de confirmation a été envoyé à ton adresse.<br>Clique dessus pour activer ton compte.</div>
+  <button onclick="document.getElementById('confirm-overlay').style.display='none';switchAuthTab('login');" style="width:100%;max-width:340px;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-bottom:12px;">Retour à la connexion</button>
+  <button onclick="resendConfirmEmail()" style="width:100%;max-width:340px;padding:12px;background:transparent;color:#888;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);">Renvoyer l'email</button>
+</div>
 
 <!-- POPUP INSTALLATION UNIVERSEL -->
 <div id="install-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);">
@@ -519,7 +529,7 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
         <div class="field"><label>Mot de passe</label>
           <div class="pwd-wrap"><input type="password" id="login-pass" placeholder="••••••••"><button class="pwd-eye" onclick="togglePwd('login-pass',this)">👁</button></div>
         </div>
-        <div class="forgot"><a onclick="showToast('Lien envoyé 📧')">Mot de passe oublié ?</a></div>
+        <div class="forgot"><a onclick="doForgotPassword()">Mot de passe oublié ?</a></div>
         <button class="btn-full" onclick="doLogin()">Se connecter</button>
         <div class="divider"><div></div><span>ou</span><div></div></div>
         <button class="btn-ghost" onclick="doGuestMode()">Continuer sans compte</button>
@@ -545,6 +555,99 @@ body{background:#f2f2f2;max-width:430px;margin:0 auto;height:100vh;display:flex;
 <script src="spots_data.js"></script>
 <script>
 var SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
+
+// ============ SUPABASE AUTH ============
+var supabaseClient = supabase.createClient(
+  'https://bofoaaelxsjphjwbbtbc.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw'
+);
+
+var lastRegEmail = '';
+
+async function doLogin() {
+  var u = document.getElementById('login-user').value.trim();
+  var p = document.getElementById('login-pass').value;
+  if (!u || !p) { showToast('⚠️ Champs requis'); return; }
+  showToast('⏳ Connexion…');
+  var { data, error } = await supabaseClient.auth.signInWithPassword({ email: u, password: p });
+  if (error) {
+    if (error.message.includes('Email not confirmed')) showToast('📧 Confirme ton email d\'abord');
+    else if (error.message.includes('Invalid login')) showToast('❌ Email ou mot de passe incorrect');
+    else showToast('❌ ' + error.message);
+    return;
+  }
+  currentUser = {
+    username: data.user.user_metadata.username || data.user.email.split('@')[0],
+    email: data.user.email,
+    role: data.user.user_metadata.role || 'contrib',
+    contributions: 0,
+    avatar: (data.user.user_metadata.username || data.user.email)[0].toUpperCase()
+  };
+  showToast('✅ Bienvenue ' + currentUser.username + ' !');
+  showScreen('profile-screen', document.querySelectorAll('.nav-btn')[3]);
+}
+
+async function doRegister() {
+  var u = document.getElementById('reg-user').value.trim();
+  var e = document.getElementById('reg-email').value.trim();
+  var p = document.getElementById('reg-pass').value;
+  var p2 = document.getElementById('reg-pass2').value;
+  if (!u || !e || !p) { showToast('⚠️ Tous les champs requis'); return; }
+  if (p !== p2) { showToast('❌ Mots de passe différents'); return; }
+  if (p.length < 6) { showToast('❌ Mot de passe trop court (6 min)'); return; }
+  if (!document.getElementById('reg-cgu').checked) { showToast('⚠️ Acceptez les CGU'); return; }
+  showToast('⏳ Création du compte…');
+  var { data, error } = await supabaseClient.auth.signUp({
+    email: e, password: p,
+    options: { data: { username: u, role: 'contrib' } }
+  });
+  if (error) { showToast('❌ ' + error.message); return; }
+  lastRegEmail = e;
+  document.getElementById('confirm-msg').innerHTML =
+    'Un lien de confirmation a été envoyé à <strong>' + e + '</strong>.<br>Clique dessus pour activer ton compte.';
+  document.getElementById('confirm-overlay').style.display = 'flex';
+}
+
+async function resendConfirmEmail() {
+  if (!lastRegEmail) { showToast('⚠️ Aucun email enregistré'); return; }
+  var { error } = await supabaseClient.auth.resend({ type: 'signup', email: lastRegEmail });
+  if (error) showToast('❌ ' + error.message);
+  else showToast('📧 Email renvoyé !');
+}
+
+async function doLogout() {
+  await supabaseClient.auth.signOut();
+  currentUser = null;
+  showScreen('auth-screen', document.querySelectorAll('.nav-btn')[3]);
+  showToast('À bientôt !');
+}
+
+async function doForgotPassword() {
+  var u = document.getElementById('login-user').value.trim();
+  if (!u) { showToast('⚠️ Saisis ton email d\'abord'); return; }
+  var { error } = await supabaseClient.auth.resetPasswordForEmail(u, {
+    redirectTo: 'https://jerdewapp.github.io/pumpfinder'
+  });
+  if (error) showToast('❌ ' + error.message);
+  else showToast('📧 Lien envoyé sur ' + u);
+}
+
+async function initAuth() {
+  var { data } = await supabaseClient.auth.getSession();
+  if (data.session) {
+    var user = data.session.user;
+    currentUser = {
+      username: user.user_metadata.username || user.email.split('@')[0],
+      email: user.email,
+      role: user.user_metadata.role || 'contrib',
+      contributions: 0,
+      avatar: (user.user_metadata.username || user.email)[0].toUpperCase()
+    };
+  } else {
+    currentUser = { username: 'Invité', role: 'guest', contributions: 0, avatar: '?' };
+  }
+}
+// ============ FIN SUPABASE AUTH ============
 
 // ============ INSTALL POPUP ============
 var deferredPrompt = null;
@@ -610,15 +713,17 @@ function doInstall() {
 }
 // ============ FIN INSTALL POPUP ============
 
-// ============ SUPABASE ============
+// ============ SUPABASE REST (spots + reports) ============
 var SUPA_URL = 'https://bofoaaelxsjphjwbbtbc.supabase.co';
 var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw';
 
 function supaFetch(path, options) {
+  var session = supabaseClient.auth.session ? supabaseClient.auth.session() : null;
+  var token = (session && session.access_token) ? session.access_token : SUPA_KEY;
   return fetch(SUPA_URL + '/rest/v1/' + path, Object.assign({
     headers: {
       'apikey': SUPA_KEY,
-      'Authorization': 'Bearer ' + SUPA_KEY,
+      'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json',
       'Prefer': 'return=representation'
     }
@@ -670,7 +775,7 @@ function saveReportToSupabase(spotId, source, status) {
     body: JSON.stringify({ spot_id: String(spotId), spot_source: source||'ourouler', status: status, device_id: getDeviceId() })
   });
 }
-// ============ FIN SUPABASE ============
+// ============ FIN SUPABASE REST ============
 
 var LANG = {
   fr: {
@@ -886,16 +991,11 @@ var FILTER_PILL_CFG = {
 var lang="fr", activeFilter="all", searchQuery="";
 var userPos=null, searchPos=null, nearestId=null;
 var map, markers=[], clusterGroup=null, userMarker=null, osmRadius=50;
-var favorites=new Set([1,4]);
+var favorites=new Set();
 var currentUser=null;
 var toastTimer, searchOpen=false;
 var selectedBuilder=null, selectedDiff=null, selectedSurface=null;
 var currentStep=1;
-
-var DEMO_ACCOUNTS=[
-  {username:"PumpRider69",email:"rider@demo.fr",password:"pump1234",role:"contrib",contributions:5,avatar:"P"},
-  {username:"admin",email:"admin@demo.fr",password:"admin",role:"admin",contributions:42,avatar:"A"}
-];
 
 function makeMarker(s, isNearest) {
   var sz=isNearest?56:40;
@@ -1302,7 +1402,14 @@ function doLogout(){currentUser=null;showScreen("auth-screen",document.querySele
 function switchAuthTab(tab){var isL=tab==="login";document.getElementById("auth-login").style.display=isL?"block":"none";document.getElementById("auth-register").style.display=isL?"none":"block";document.getElementById("tab-login").className="auth-tab "+(isL?"active":"inactive");document.getElementById("tab-register").className="auth-tab "+(isL?"inactive":"active");}
 function togglePwd(id,btn){var el=document.getElementById(id);el.type=el.type==="password"?"text":"password";btn.textContent=el.type==="password"?"👁":"🙈";}
 
-function renderProfile(){
+window.addEventListener("load", async function(){
+  SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
+  await initAuth();
+  initMap(); applyLang(); loadCommunitySpots();
+  document.getElementById("filter-bar").style.display="flex";
+  showScreen("map-screen", document.querySelectorAll(".nav-btn")[0]);
+  setTimeout(showInstallPopup, 2000);
+});
   if(!currentUser){showScreen("auth-screen",null);return;}
   var rBadge=currentUser.role==="admin"?"⚙️ Admin":currentUser.role==="guest"?"👀 "+t("auth_guest"):"🚴 Rider";
   document.getElementById("profile-content").innerHTML=
@@ -1355,14 +1462,7 @@ function showScreen(id,btn){
   closeDetail();
 }
 
-window.addEventListener("load",function(){
-  SPOTS = (typeof SPOTS_DATA !== 'undefined' && SPOTS_DATA.length > 0) ? SPOTS_DATA : [];
-  initMap(); applyLang(); loadCommunitySpots();
-  currentUser={username:"Invité",role:"guest",contributions:0,avatar:"?"};
-  document.getElementById("filter-bar").style.display="flex";
-  showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
-  setTimeout(showInstallPopup, 2000);
-});
+function renderProfile(){
 </script>
 <script>
 if('serviceWorker' in navigator) {
