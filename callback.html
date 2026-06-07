@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PumpFinder</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<script>
+  var supa = supabase.createClient(
+    'https://bofoaaelxsjphjwbbtbc.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZm9hYWVseHNqcGhqd2JidGJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE3MjcsImV4cCI6MjA5NTUzNzcyN30.w01igRMLLvA-SIIlNBT5G78i2UIcBOJh3N9GUk5ZHlw'
+  );
+  supa.auth.getSession().then(function(res) {
+    if (res.data && res.data.session) {
+      window.location.href = '/pumpfinder';
+    } else {
+      var hash = window.location.hash;
+      if (hash.indexOf('error') !== -1) {
+        window.location.href = '/pumpfinder?auth_error=1';
+      } else {
+        window.location.href = '/pumpfinder';
+      }
+    }
+  });
+</script>
+</body>
+</html>
