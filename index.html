@@ -902,7 +902,7 @@ function toggleMoreFilters() {
 }
 
 function showDetail(id) {
-  var s=SPOTS.find(function(x){return x.id===id;}); if(!s) return;
+  var s=SPOTS.find(function(x){return String(x.id)===String(id);}); if(!s) return;
   var b=BUILDERS[s.builder]||BUILDERS.inconnu;
   var df=DIFF_CFG[s.diff]||DIFF_CFG.inter;
   var isFav=favorites.has(s.id);
@@ -968,7 +968,7 @@ function renderList() {
     var isN=userPos&&i===0;
     var distTag=userPos?'<span class="tag '+(isN?"tag-dist":"tag-dist-pale")+'">'+fmtDist(s._d)+'</span>':"";
     var thumb=s.photo?'<img src="'+s.photo+'" class="card-thumb" onerror="this.src=\'https://i.ibb.co/svKcfJwd/logos-app.png\'">':'<img src="https://i.ibb.co/svKcfJwd/logos-app.png" class="card-thumb">';
-    return '<div class="list-card'+(isN?" is-nearest":"")+'" onclick="openFromList(\''+s.id+'\')">+thumb+'<div class="card-body"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px"><div class="card-name">'+s.name+'</div>'+(isN?'<span class="nearest-badge">⚡ + proche</span>':"")+'</div><div class="card-sub">'+(s.city||"")+(s.alt?' · '+s.alt+'m':"")+(s.length?' · '+s.length+'m':"")+'</div><div class="card-tags"><span class="badge-'+b.cls+'">'+b.icon+' '+b.label+'</span>'+(s.kids?'<span class="tag tag-kids">🛴 Kid Zone</span>':"")+(s.equip&&s.equip.playground?'<span class="tag tag-playground">🛝 Aire de jeux</span>':"")+(s.lit?'<span class="tag tag-orange">💡 Éclairé</span>':"")+(s.status!=="ok"?'<span class="tag tag-red">'+s.status_msg+'</span>':'<span class="tag tag-green">✅</span>')+distTag+'</div></div></div>';
+    return '<div class="list-card'+(isN?" is-nearest":"")+'" onclick="openFromList(\''+s.id+'\')">'+thumb+'<div class="card-body"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px"><div class="card-name">'+s.name+'</div>'+(isN?'<span class="nearest-badge">⚡ + proche</span>':"")+'</div><div class="card-sub">'+(s.city||"")+(s.alt?' · '+s.alt+'m':"")+(s.length?' · '+s.length+'m':"")+'</div><div class="card-tags"><span class="badge-'+b.cls+'">'+b.icon+' '+b.label+'</span>'+(s.kids?'<span class="tag tag-kids">🛴 Kid Zone</span>':"")+(s.equip&&s.equip.playground?'<span class="tag tag-playground">🛝 Aire de jeux</span>':"")+(s.lit?'<span class="tag tag-orange">💡 Éclairé</span>':"")+(s.status!=="ok"?'<span class="tag tag-red">'+s.status_msg+'</span>':'<span class="tag tag-green">✅</span>')+distTag+'</div></div></div>';
   }).join("");
 }
 
@@ -998,7 +998,13 @@ function resetFilters(){
   updateFilterPill();computeNearest();renderMarkers();renderList();
 }
 
-function openFromList(id){showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);setTimeout(function(){showDetail(id);},300);}
+function openFromList(id){
+  showScreen("map-screen",document.querySelectorAll(".nav-btn")[0]);
+  setTimeout(function(){
+    if(map) map.invalidateSize();
+    showDetail(String(id));
+  },200);
+}
 function selDiffTile(el,val){document.querySelectorAll(".diff-tile").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");selectedDiff=val;}
 function selSurfaceTile(el,val){document.querySelectorAll(".surface-tile").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");selectedSurface=val;}
 function selBuilderTile(el,val){document.querySelectorAll(".builder-tile").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");selectedBuilder=val;}
