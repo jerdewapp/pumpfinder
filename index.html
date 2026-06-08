@@ -566,6 +566,12 @@ function setCurrentUser(user) {
 }
 
 function initAuth() {
+  // Gestion du callback Supabase (confirmation email, reset password)
+  var hash = window.location.hash;
+  if (hash && hash.indexOf('access_token') !== -1) {
+    // Supabase a mis les tokens dans le hash — on nettoie l'URL
+    window.history.replaceState(null, '', window.location.pathname);
+  }
   return supa.auth.getSession().then(function(res) {
     if (res.data && res.data.session && res.data.session.user) {
       setCurrentUser(res.data.session.user);
